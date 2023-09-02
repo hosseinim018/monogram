@@ -42,11 +42,10 @@ class Webhook:
         if drop_pending_updates is not None:
             payload['drop_pending_updates'] = drop_pending_updates
 
-        headers = {}
         if secret_token:
-            headers['X-Telegram-Bot-Api-Secret-Token'] = secret_token
+            payload['secret_token'] = secret_token
 
-        response = requests.post(self.base_url + 'setWebhook', json=payload, headers=headers)
+        response = requests.post(self.base_url + 'setWebhook', json=payload)
         return response.json().get('ok', False)
 
     def delete_webhook(self, drop_pending_updates=None):
