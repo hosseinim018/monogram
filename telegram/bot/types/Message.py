@@ -1,31 +1,28 @@
 from dataclasses import dataclass
 from typing import Optional, List
 from telegram.bot.types import *
-# from . import *
-from .Chat import Chat
-from .User import User
-from .MessageEntity import MessageEntity
-from .Animation import Animation
-from .Audio import Audio
-from .Document import Document
-from .PhotoSize import PhotoSize
-from .Dice import Dice
-from .Poll import Poll
-from .Venue import Venue
-from .Location import Location
-from .MessageAutoDeleteTimerChanged import MessageAutoDeleteTimerChanged
-from .Voice import Voice
-from .VideoNote import VideoNote
-from .Video import Video
-from .Contact import Contact
-from .WebAppData import WebAppData
-from .InlineKeyboardMarkup import InlineKeyboardMarkup
-from .VideoChatParticipantsInvited import VideoChatParticipantsInvited
-from telegram.bot.types import VideoChatStarted, GeneralForumTopicHidden, GeneralForumTopicUnhidden, ForumTopicReopened, \
-    ForumTopicClosed, ForumTopicEdited, ForumTopicCreated, ProximityAlertTriggered, WriteAccessAllowed, ChatShared, \
-    UserShared, Contact, VideoNote, Video, Story
-from .VideoChatEnded import VideoChatEnded
-from .VideoChatScheduled import VideoChatScheduled
+# from .Chat import Chat
+# from .User import User
+# from .Animation import Animation
+# from .Audio import Audio
+# from .Document import Document
+# from .Dice import Dice
+# from .Poll import Poll
+# from .Venue import Venue
+# from .Location import Location
+# from .MessageAutoDeleteTimerChanged import MessageAutoDeleteTimerChanged
+# from .Voice import Voice
+# from .VideoNote import VideoNote
+# from .Video import Video
+# from .Contact import Contact
+# from .WebAppData import WebAppData
+# from .InlineKeyboardMarkup import InlineKeyboardMarkup
+# from .VideoChatParticipantsInvited import VideoChatParticipantsInvited
+# from telegram.bot.types import VideoChatStarted, GeneralForumTopicHidden, GeneralForumTopicUnhidden, ForumTopicReopened, \
+#     ForumTopicClosed, ForumTopicEdited, ForumTopicCreated, ProximityAlertTriggered, WriteAccessAllowed, ChatShared, \
+#     UserShared, Contact, VideoNote, Video, Story
+# from .VideoChatEnded import VideoChatEnded
+# from .VideoChatScheduled import VideoChatScheduled
 
 @dataclass
 class Message:
