@@ -14,7 +14,7 @@ from telegram.bot.types import *
 # from .Voice import Voice
 # from .VideoNote import VideoNote
 # from .Video import Video
-# from .Contact import Contact
+from .Contact import Contact
 # from .WebAppData import WebAppData
 # from .InlineKeyboardMarkup import InlineKeyboardMarkup
 # from .VideoChatParticipantsInvited import VideoChatParticipantsInvited
@@ -23,6 +23,13 @@ from telegram.bot.types import *
 #     UserShared, Contact, VideoNote, Video, Story
 # from .VideoChatEnded import VideoChatEnded
 # from .VideoChatScheduled import VideoChatScheduled
+class Invoice:
+    def __init__(self, **kwargs):
+        pass
+
+class SuccessfulPayment:
+    def __init__(self, **kwargs):
+        pass
 
 @dataclass
 class Message:
@@ -62,7 +69,7 @@ class Message:
         caption: Optional[str] = None,
         caption_entities: Optional[List] = None,
         has_media_spoiler: Optional[bool] = None,
-        contact: Optional[Contact] = None,
+        contact: Optional[dict] = None,
         dice: Optional[Dice] = None,
         game: Optional[dict] = None,
         poll: Optional[Poll] = None,
