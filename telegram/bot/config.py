@@ -1,7 +1,17 @@
+import hashlib
+from configparser import ConfigParser
+
+config = ConfigParser()
+config.read('./config.ini')
+
 # Each bot is given a unique authentication token when it is created.
 # The token looks something like 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
 # Replace 'YOUR_BOT_TOKEN' with your actual bot token obtained from @BotFather in Telegram
+# TOKEN: str = config.get('telegram', 'token')
 TOKEN: str = '968534296:AAG6OR6RNnBKhwLk8DR1b6SjIoSVUpTxu6Y'
+
+# Hash TOKEN with hashlib.sha256
+SECRET_TOKEN = hashlib.sha256(TOKEN.encode('utf-8')).hexdigest()
 
 # Use the default API endpoint of Telegram. If you want to use a local Bot API server,
 # replace it with the URL of your local server
@@ -32,3 +42,16 @@ METHODS = [
 ]
 # create telegram api based on METHODS and API_ENDPOINT
 API = {method: API_ENDPOINT + method for method in METHODS}
+
+# in this dictionary add function
+from telegram.Updates import Callback_Queries, Messages
+
+UPDATE_HANDLER = {
+    'callback_query': [
+        Callback_Queries.cq1
+    ],
+    'message': [
+        Messages.nm,
+        Messages.start
+    ],
+}
