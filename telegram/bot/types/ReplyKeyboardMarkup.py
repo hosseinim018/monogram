@@ -9,9 +9,9 @@ class ReplyKeyboardMarkup:
     """
 
     @validate_parameters
-    def __new__(self, keyboard: List[List[KeyboardButton]], payload, is_persistent: Optional[bool] = False,
-                 resize_keyboard: Optional[bool] = False, one_time_keyboard: Optional[bool] = False,
-                 input_field_placeholder: Optional[str] = None, selective: Optional[bool] = None):
+    def __new__(cls, keyboard: List[List[KeyboardButton]], payload, is_persistent: Optional[bool] = False,
+                resize_keyboard: Optional[bool] = False, one_time_keyboard: Optional[bool] = False,
+                input_field_placeholder: Optional[str] = None, selective: Optional[bool] = None):
         """
         Initialize a ReplyKeyboardMarkup object.
 
@@ -28,5 +28,4 @@ class ReplyKeyboardMarkup:
         # self.one_time_keyboard = one_time_keyboard
         # self.input_field_placeholder = input_field_placeholder
         # self.selective = selective
-        self.data = payload
         return payload
