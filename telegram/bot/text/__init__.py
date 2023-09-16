@@ -1,5 +1,5 @@
-from text.Text import Spoiler, Mono, Bold, Italic, Hashtag, Underline, CreateLink, Strikethrough, Mention, inlineMention, INIsection
-from text.Formater import format_text
+from .Text import Spoiler, Mono, Bold, Italic, Hashtag, Underline, CreateLink, Strikethrough, Mention, inlineMention, INIsection
+from .Formater import format_text
 
 __version__ = '0.1.0'
 
