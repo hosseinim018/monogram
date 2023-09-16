@@ -6,7 +6,7 @@ class InlineKeyboardMarkup:
     """
     This object represents an inline keyboard that appears right next to the message it belongs to.
     """
-    def __new__(cls, inline_keyboard: List[List[InlineKeyboardButton]]) -> dict:
+    def __new__(cls, keyboard: List[List[InlineKeyboardButton]]) -> dict:
         """
         Initialize an InlineKeyboardMarkup object.
 
@@ -14,6 +14,6 @@ class InlineKeyboardMarkup:
         """
 
         markup = {
-            'inline_keyboard': inline_keyboard
+            'inline_keyboard': keyboard
         }
         return markup
