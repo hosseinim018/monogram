@@ -1,7 +1,5 @@
-def validate_parameters(func):
-    def wrapper(*args, **kwargs):
-        payload = {k: v for k, v in kwargs.items() if v is not None}
-        # Call the original function and pass the payload
-        return func(*args, payload=payload, **kwargs)
-
-    return wrapper
+def validate_payload(locals):
+    _locals = locals  # Create a copy of locals()
+    _locals.pop('cls')  # Remove the key cls from _locals
+    payload = {k: v for k, v in _locals.items() if v}  # Remove None values from payload
+    return payload
