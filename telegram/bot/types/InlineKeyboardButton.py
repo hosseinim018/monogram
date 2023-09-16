@@ -1,14 +1,17 @@
 from typing import Optional
-from telegram.bot.core import validate_parameters
+from telegram.bot.types import WebAppInfo, LoginUrl, SwitchInlineQueryChosenChat
 
-from telegram.bot.types import *
+
+class CallbackGame:
+    pass
+
 
 class InlineKeyboardButton:
     """
         This object represents one button of an inline keyboard.
         """
 
-    def __new__(self, text: str, url: Optional[str] = None, callback_data: Optional[str] = None,
+    def __new__(cls, text: str, url: Optional[str] = None, callback_data: Optional[str] = None,
                 web_app: Optional[WebAppInfo] = None, login_url: Optional[LoginUrl] = None,
                 switch_inline_query: Optional[str] = None, switch_inline_query_current_chat: Optional[str] = None,
                 switch_inline_query_chosen_chat: Optional[SwitchInlineQueryChosenChat] = None,
@@ -27,16 +30,6 @@ class InlineKeyboardButton:
             :param callback_game: Optional. Information about the callback game to be played when the button is pressed.
             :param pay: Optional. Boolean indicating if the button is for a payment.
             """
-        self.text = text
-        self.url = url
-        self.callback_data = callback_data
-        self.web_app = web_app
-        self.login_url = login_url
-        self.switch_inline_query = switch_inline_query
-        self.switch_inline_query_current_chat = switch_inline_query_current_chat
-        self.switch_inline_query_chosen_chat = switch_inline_query_chosen_chat
-        self.callback_game = callback_game
-        self.pay = pay
 
         payload = {
             'text': text
@@ -59,3 +52,5 @@ class InlineKeyboardButton:
             payload['callback_game'] = callback_game
         if pay:
             payload['pay'] = pay
+
+        return payload
