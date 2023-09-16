@@ -88,6 +88,8 @@ from .Contact import Contact
 from telegram.bot.types import VideoChatStarted, GeneralForumTopicHidden, GeneralForumTopicUnhidden, ForumTopicReopened, \
     ForumTopicClosed, ForumTopicCreated, Story
 
+class CallbackGame:
+    pass
 
 __all__ = [
     "Chat",
@@ -179,5 +181,6 @@ __all__ = [
     "InputMediaAudio",
     "InputMediaDocument",
     "InputFile",
-    "ChatShared"
+    "ChatShared",
+    "CallbackGame"
 ]
