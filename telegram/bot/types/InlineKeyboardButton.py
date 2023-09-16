@@ -32,25 +32,34 @@ class InlineKeyboardButton:
             """
 
         payload = {
-            'text': text
+            'text': text,
+            'url': url,
+            'callback_data': callback_data,
+            'web_app': web_app,
+            'login_url': login_url,
+            'switch_inline_query': switch_inline_query,
+            'switch_inline_query_current_chat': switch_inline_query_current_chat,
+            'switch_inline_query_chosen_chat': switch_inline_query_chosen_chat,
+            'callback_game': callback_game,
+            'pay': pay
         }
-        if url:
-            payload['url'] = url
-        if callback_data:
-            payload['callback_data'] = callback_data
-        if web_app:
-            payload['web_app'] = web_app
-        if login_url:
-            payload['login_url'] = login_url
-        if switch_inline_query:
-            payload['switch_inline_query'] = switch_inline_query
-        if switch_inline_query_current_chat:
-            payload['switch_inline_query_current_chat'] = switch_inline_query_current_chat
-        if switch_inline_query_chosen_chat:
-            payload['switch_inline_query_chosen_chat'] = switch_inline_query_chosen_chat
-        if callback_game:
-            payload['callback_game'] = callback_game
-        if pay:
-            payload['pay'] = pay
+        # if url:
+        #     payload['url'] = url
+        # if callback_data:
+        #     payload['callback_data'] = callback_data
+        # if web_app:
+        #     payload['web_app'] = web_app
+        # if login_url:
+        #     payload['login_url'] = login_url
+        # if switch_inline_query:
+        #     payload['switch_inline_query'] = switch_inline_query
+        # if switch_inline_query_current_chat:
+        #     payload['switch_inline_query_current_chat'] = switch_inline_query_current_chat
+        # if switch_inline_query_chosen_chat:
+        #     payload['switch_inline_query_chosen_chat'] = switch_inline_query_chosen_chat
+        # if callback_game:
+        #     payload['callback_game'] = callback_game
+        # if pay:
+        #     payload['pay'] = pay
 
         return payload
