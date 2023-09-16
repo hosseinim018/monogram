@@ -34,7 +34,7 @@ class TokenEncryptor:
             bytes: The encrypted token.
         """
         encrypted_token = self.cipher_suite.encrypt(token.encode())
-        return encrypted_token
+        return encrypted_token.decode()
 
     def decrypt(self, encrypted_token: bytes) -> str:
         """
