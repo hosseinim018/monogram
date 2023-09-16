@@ -61,6 +61,7 @@ class InlineKeyboardButton:
         #     payload['callback_game'] = callback_game
         # if pay:
         #     payload['pay'] = pay
+        import json
         def dict_to_json(dictionary):
             try:
                 # Serialize the dictionary to a JSON string
