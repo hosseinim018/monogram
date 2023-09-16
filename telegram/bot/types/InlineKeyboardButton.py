@@ -15,7 +15,7 @@ class InlineKeyboardButton:
                 web_app: Optional[WebAppInfo] = None, login_url: Optional[LoginUrl] = None,
                 switch_inline_query: Optional[str] = None, switch_inline_query_current_chat: Optional[str] = None,
                 switch_inline_query_chosen_chat: Optional[SwitchInlineQueryChosenChat] = None,
-                callback_game: Optional[CallbackGame] = None, pay: Optional[bool] = None):
+                callback_game: Optional[CallbackGame] = None, pay: Optional[bool] = None) -> dict:
         """
             Initialize an InlineKeyboardButton object.
 
