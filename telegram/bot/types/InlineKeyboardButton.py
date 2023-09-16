@@ -32,43 +32,25 @@ class InlineKeyboardButton:
             """
 
         payload = {
-            'text': text,
-            'url': url,
-            'callback_data': callback_data,
-            'web_app': web_app,
-            'login_url': login_url,
-            'switch_inline_query': switch_inline_query,
-            'switch_inline_query_current_chat': switch_inline_query_current_chat,
-            'switch_inline_query_chosen_chat': switch_inline_query_chosen_chat,
-            'callback_game': callback_game,
-            'pay': pay
+            'text': text
         }
-        # if url:
-        #     payload['url'] = url
-        # if callback_data:
-        #     payload['callback_data'] = callback_data
-        # if web_app:
-        #     payload['web_app'] = web_app
-        # if login_url:
-        #     payload['login_url'] = login_url
-        # if switch_inline_query:
-        #     payload['switch_inline_query'] = switch_inline_query
-        # if switch_inline_query_current_chat:
-        #     payload['switch_inline_query_current_chat'] = switch_inline_query_current_chat
-        # if switch_inline_query_chosen_chat:
-        #     payload['switch_inline_query_chosen_chat'] = switch_inline_query_chosen_chat
-        # if callback_game:
-        #     payload['callback_game'] = callback_game
-        # if pay:
-        #     payload['pay'] = pay
-        import json
-        def dict_to_json(dictionary):
-            try:
-                # Serialize the dictionary to a JSON string
-                json_str = json.dumps(dictionary, default=lambda x: None if x is None else str(x))
-                return json_str
-            except TypeError:
-                print("Error: Unable to serialize dictionary to JSON.")
-                return None
-        payload = dict_to_json(payload)
+        if url:
+            payload['url'] = url
+        if callback_data:
+            payload['callback_data'] = callback_data
+        if web_app:
+            payload['web_app'] = web_app
+        if login_url:
+            payload['login_url'] = login_url
+        if switch_inline_query:
+            payload['switch_inline_query'] = switch_inline_query
+        if switch_inline_query_current_chat:
+            payload['switch_inline_query_current_chat'] = switch_inline_query_current_chat
+        if switch_inline_query_chosen_chat:
+            payload['switch_inline_query_chosen_chat'] = switch_inline_query_chosen_chat
+        if callback_game:
+            payload['callback_game'] = callback_game
+        if pay:
+            payload['pay'] = pay
+
         return payload
