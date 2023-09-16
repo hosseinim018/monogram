@@ -17,4 +17,3 @@ class InlineKeyboardMarkup:
             'inline_keyboard': inline_keyboard
         }
         return markup
-
