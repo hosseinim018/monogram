@@ -1,4 +1,4 @@
-from .config import API_ENDPOINT, PROXIES, PROXY
+from telegram.bot.config import API_ENDPOINT, PROXIES, PROXY
 import requests
 import socks
 from typing import Optional, Dict, Any

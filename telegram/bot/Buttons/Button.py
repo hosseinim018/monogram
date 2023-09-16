@@ -95,6 +95,3 @@ class Inline:
             'callback_game': callback_game
         }
         return btn
-
-
-

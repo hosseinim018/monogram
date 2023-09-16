@@ -18,7 +18,11 @@ from django.contrib import admin
 from django.urls import path
 from telegram import views
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('bot', views.bot, name='bot'),
+    # path('bot', views.bot, name='bot'),
+    path('bot', views.UpdateHandler, name='bot'),
+    # path('bot', test.as_view(), name='bot'),
+
 ]

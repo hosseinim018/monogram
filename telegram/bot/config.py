@@ -52,6 +52,7 @@ UPDATE_HANDLER = {
     ],
     'message': [
         Messages.nm,
-        Messages.start
+        Messages.start,
+        Messages.test_KeyboardButton
     ],
 }

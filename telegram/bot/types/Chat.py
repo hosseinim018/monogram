@@ -157,5 +157,3 @@ class Chat:
             payload['linked_chat_id'] = linked_chat_id
         if location is not None:
             payload['location'] = location
-
-        return payload

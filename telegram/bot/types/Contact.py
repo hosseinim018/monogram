@@ -13,7 +13,7 @@ class Contact:
             last_name: Optional[str] = None,
             user_id: Optional[int] = None,
             vcard: Optional[str] = None
-    ):
+    ) -> object:
         """
         Initialize a Contact object.
 

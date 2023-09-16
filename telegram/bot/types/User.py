@@ -1,22 +1,23 @@
-from typing import Optional, Dict
+from typing import Optional
+
 
 class User:
     """Represents a Telegram user or bot."""
 
     def __init__(
-        self,
-        id: int,
-        is_bot: bool,
-        first_name: str,
-        last_name: Optional[str] = None,
-        username: Optional[str] = None,
-        language_code: Optional[str] = None,
-        is_premium: Optional[bool] = None,
-        added_to_attachment_menu: Optional[bool] = None,
-        can_join_groups: Optional[bool] = None,
-        can_read_all_group_messages: Optional[bool] = None,
-        supports_inline_queries: Optional[bool] = None
-    ) -> dict:
+            self,
+            id: int,
+            is_bot: bool,
+            first_name: str,
+            last_name: Optional[str] = None,
+            username: Optional[str] = None,
+            language_code: Optional[str] = None,
+            is_premium: Optional[bool] = None,
+            added_to_attachment_menu: Optional[bool] = None,
+            can_join_groups: Optional[bool] = None,
+            can_read_all_group_messages: Optional[bool] = None,
+            supports_inline_queries: Optional[bool] = None
+    ):
         """
         Initialize the User object.
 
@@ -32,8 +33,6 @@ class User:
             can_join_groups (bool, optional): True, if the bot can be invited to groups. Returned only in getMe.
             can_read_all_group_messages (bool, optional): True, if privacy mode is disabled for the bot. Returned only in getMe.
             supports_inline_queries (bool, optional): True, if the bot supports inline queries. Returned only in getMe.
-
-        :return dict
         """
         self.id = id
         self.is_bot = is_bot
@@ -70,4 +69,4 @@ class User:
         if self.supports_inline_queries is not None:
             payload['supports_inline_queries'] = self.supports_inline_queries
 
-        return payload
+

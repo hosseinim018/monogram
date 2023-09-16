@@ -1,4 +1,4 @@
-from telegram.config import API_ENDPOINT
+from telegram.bot.config import API_ENDPOINT, SECRET_TOKEN
 import requests
 
 class Webhook:
@@ -25,7 +25,9 @@ class Webhook:
         Returns:
             bool: True on success, False otherwise.
         """
-        payload = {'url': url}
+        payload = {
+            'url': url,
+        }
 
         if certificate:
             payload['certificate'] = certificate
@@ -44,6 +46,8 @@ class Webhook:
 
         if secret_token:
             payload['secret_token'] = secret_token
+        else:
+            payload['secret_token'] = SECRET_TOKEN
 
         response = requests.post(self.base_url + 'setWebhook', json=payload)
         return response.json().get('ok', False)

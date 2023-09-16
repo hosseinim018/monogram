@@ -1,4 +1,4 @@
-from config import API, PROXIES
+from telegram.bot.config import API, PROXIES
 import requests
 import socks
 import logging

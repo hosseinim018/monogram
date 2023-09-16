@@ -1,20 +1,24 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from telegram.bot.UpdatingMessages.newMessage import newMessage
 import json
-from .sendMessage import send_message
-
-
+from telegram.bot.config import UPDATE_HANDLER
+from telegram.bot.UpdatingMessages.Update import Update
 
 
 @csrf_exempt
-@newMessage(pattern=r'^/start$')
-def bot(request):
-    result = json.loads(request.body.decode('utf-8'))
-    print(result)
-    chat_id = result['message']['chat']['id']
-    text = result['message']['text']
-    print(chat_id, text)
-    send_message(chat_id=chat_id, text=text)
-    return HttpResponse("Hello, world!")
+def UpdateHandler(request):
+    if request.method == 'POST':
+        result = json.loads(request.body.decode('utf-8'))
+        print(result)
+        print('-------end result in views.py--------')
+        if 'callback_query' in result:
+            # run callback query functions
+            for cqf in UPDATE_HANDLER['callback_query']:
+                cqf(result['callback_query'])
+        else:
+            update = Update(**result)
+
+            for message in UPDATE_HANDLER['message']:
+                message(update.message)
+        return HttpResponse("Hello, world!")
