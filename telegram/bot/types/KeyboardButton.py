@@ -3,13 +3,12 @@ from .KeyboardButtonPollType import KeyboardButtonPollType
 from .WebAppInfo import WebAppInfo
 from .KeyboardButtonRequestUser import KeyboardButtonRequestUser
 from .KeyboardButtonRequestChat import KeyboardButtonRequestChat
-from telegram.bot.core import validate_parameters
+from telegram.bot.core import validate_payload
 class KeyboardButton:
     """
     This object represents one button of the reply keyboard.
     """
-    @validate_parameters
-    def __new__(self, text: str, payload, request_user: Optional[KeyboardButtonRequestUser] = None,
+    def __new__(self, text: str, request_user: Optional[KeyboardButtonRequestUser] = None,
                  request_chat: Optional[KeyboardButtonRequestChat] = None,
                  request_contact: Optional[bool] = None, request_location: Optional[bool] = None,
                  request_poll: Optional[KeyboardButtonPollType] = None, web_app: Optional[WebAppInfo] = None):
@@ -24,13 +23,6 @@ class KeyboardButton:
         :param request_poll: Optional. The type of poll to be created when the button is pressed.
         :param web_app: Optional. Information about the web app to be opened when the button is pressed.
         """
-        # self.text = text
-        # self.request_user = request_user
-        # self.request_chat = request_chat
-        # self.request_contact = request_contact
-        # self.request_location = request_location
-        # self.request_poll = request_poll
-        # self.web_app = web_app
-        self.data = payload
+        payload = validate_payload(locals().copy())
         return payload
 

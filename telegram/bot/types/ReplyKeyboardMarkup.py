@@ -1,6 +1,6 @@
 from typing import Optional, List
 from .KeyboardButton import KeyboardButton
-from telegram.bot.core import validate_parameters
+from telegram.bot.core import validate_payload
 
 
 class ReplyKeyboardMarkup:
@@ -8,8 +8,8 @@ class ReplyKeyboardMarkup:
     This object represents a custom keyboard with reply options.
     """
 
-    @validate_parameters
-    def __new__(cls, keyboard: List[List[KeyboardButton]], payload, is_persistent: Optional[bool] = False,
+
+    def __new__(cls, keyboard: List[List[KeyboardButton]], is_persistent: Optional[bool] = False,
                 resize_keyboard: Optional[bool] = False, one_time_keyboard: Optional[bool] = False,
                 input_field_placeholder: Optional[str] = None, selective: Optional[bool] = None):
         """
@@ -22,10 +22,5 @@ class ReplyKeyboardMarkup:
         :param input_field_placeholder: Optional. The placeholder text to display in the input field.
         :param selective: Optional. Boolean indicating if the keyboard should be selective.
         """
-        # self.keyboard = keyboard
-        # self.is_persistent = is_persistent
-        # self.resize_keyboard = resize_keyboard
-        # self.one_time_keyboard = one_time_keyboard
-        # self.input_field_placeholder = input_field_placeholder
-        # self.selective = selective
+        payload = validate_payload(locals().copy())
         return payload

@@ -1,6 +1,6 @@
 from typing import Optional
 from telegram.bot.types import WebAppInfo, LoginUrl, SwitchInlineQueryChosenChat
-
+from telegram.bot.core import validate_payload
 
 class CallbackGame:
     pass
@@ -30,27 +30,5 @@ class InlineKeyboardButton:
             :param callback_game: Optional. Information about the callback game to be played when the button is pressed.
             :param pay: Optional. Boolean indicating if the button is for a payment.
             """
-
-        payload = {
-            'text': text
-        }
-        if url:
-            payload['url'] = url
-        if callback_data:
-            payload['callback_data'] = callback_data
-        if web_app:
-            payload['web_app'] = web_app
-        if login_url:
-            payload['login_url'] = login_url
-        if switch_inline_query:
-            payload['switch_inline_query'] = switch_inline_query
-        if switch_inline_query_current_chat:
-            payload['switch_inline_query_current_chat'] = switch_inline_query_current_chat
-        if switch_inline_query_chosen_chat:
-            payload['switch_inline_query_chosen_chat'] = switch_inline_query_chosen_chat
-        if callback_game:
-            payload['callback_game'] = callback_game
-        if pay:
-            payload['pay'] = pay
-
+        payload = validate_payload(locals().copy())
         return payload
