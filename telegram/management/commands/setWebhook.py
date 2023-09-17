@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from telegram.bot.connection.Webhook import Webhook
+from telegram.bot.core import webhook
+
 
 class Command(BaseCommand):
     help = 'Sets the Telegram bot webhook'
@@ -21,8 +22,6 @@ class Command(BaseCommand):
         allowed_updates = options['allowed_updates']
         drop_pending_updates = options['drop_pending_updates']
         secret_token = options['secret_token']
-
-        webhook = Webhook()
 
         result = webhook.set_webhook(url=url, certificate=certificate, ip_address=ip_address,
                                      max_connections=max_connections, allowed_updates=allowed_updates,

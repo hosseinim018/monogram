@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from telegram.bot.connection.Webhook import Webhook
+from telegram.bot.core import webhook
+
 
 class Command(BaseCommand):
     help = 'Deletes the Telegram bot webhook'
@@ -9,9 +10,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         drop_pending_updates = options['drop_pending_updates']
-
-        webhook = Webhook()
-
         result = webhook.delete_webhook(drop_pending_updates=drop_pending_updates)
 
         if result:
