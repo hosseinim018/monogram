@@ -1,6 +1,7 @@
 from telegram.bot.config import API_ENDPOINT, SECRET_TOKEN
 import requests
 
+
 class Webhook:
     def __init__(self):
         """
