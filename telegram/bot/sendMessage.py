@@ -1,6 +1,5 @@
 from typing import Optional, Dict, Any
-from telegram.bot.connection.telegram import telegram
-# from .text import format_text
+from telegram.bot.core.telegram import telegram
 from telegram.bot.text import format_text
 
 
