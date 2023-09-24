@@ -1,10 +1,11 @@
-from telegram.bot.config import API, PROXIES
+from telegram.bot.config import PROXIES, API_ENDPOINT
 import requests
 import socks
 import logging
 
 
 session = requests.Session()
+
 
 def telegram(method: str, data: dict) -> None:
     """
@@ -26,7 +27,7 @@ def telegram(method: str, data: dict) -> None:
     try:
         # Send the request to telegram based on method
         # in config.py if you set PROXY to True session post with PROXIES that you set in config.py
-        response = session.post(API[method], json=data, proxies=PROXIES)
+        response = session.post(API_ENDPOINT + method, json=data, proxies=PROXIES)
         response.raise_for_status()  # Raise an exception for non-2xx status codes
 
     except requests.exceptions.HTTPError as e:
