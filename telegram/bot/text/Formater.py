@@ -24,7 +24,7 @@ def format_text(text):
     text = re.sub(r'~(.*?)~', r'<s>\1</s>', text)
 
     # Spoiler: ||spoiler||
-    text = re.sub(r'||(.*?)||', r'<span class="spoiler">\1</span>', text)
+    text = re.sub(r'\|\|(.*?)\|\|', r'<span class="spoiler">\1</span>', text)
 
     # Inline URL: [inline URL](http://www.example.com/)
     text = re.sub(r'\[inline URL\]\((.*?)\)', r'<a href="\1">\1</a>', text)
