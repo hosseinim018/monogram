@@ -1,5 +1,5 @@
 import json
-from telegram.bot.config import config
+from monogram.bot.config import config
 
 
 class MyMiddleware:
@@ -12,7 +12,7 @@ class MyMiddleware:
             # result = json.loads(request.body.decode('utf-8'))
             headers = request.headers
             secret_token = headers['X-Telegram-Bot-Api-Secret-Token']
-            SECRET_TOKEN = config.get('telegram', 'secret_token')
+            SECRET_TOKEN = config.get('monogram', 'secret_token')
             if secret_token == SECRET_TOKEN:
                 response = self.get_response(request)
                 # Perform any response processing here

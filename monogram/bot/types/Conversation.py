@@ -1,6 +1,6 @@
 import time
-from telegram.bot.methods.sendMessage import send_message
-from telegram.bot.types import Message
+from monogram.bot.methods.sendMessage import send_message
+from monogram.bot.types import Message
 
 class Conversation:
     def __init__(self, message: Message, timeout=60):

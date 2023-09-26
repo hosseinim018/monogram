@@ -1,8 +1,8 @@
 from ..bot.newMessage import newMessage
-from telegram.bot.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup
-from telegram.bot.types import BotCommand
-from telegram.bot.types.Conversation import Conversation
-from telegram.bot.methods.sendMessage import send_message
+from monogram.bot.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup
+from monogram.bot.types import BotCommand
+from monogram.bot.types.Conversation import Conversation
+from monogram.bot.methods.sendMessage import send_message
 
 
 @newMessage(pattern=r'^/test$')

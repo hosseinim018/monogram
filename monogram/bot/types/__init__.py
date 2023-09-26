@@ -85,7 +85,7 @@ from .ChatShared import ChatShared
 from .Video import Video
 from .VideoNote import VideoNote
 from .Contact import Contact
-from telegram.bot.types import VideoChatStarted, GeneralForumTopicHidden, GeneralForumTopicUnhidden, ForumTopicReopened, \
+from monogram.bot.types import VideoChatStarted, GeneralForumTopicHidden, GeneralForumTopicUnhidden, ForumTopicReopened, \
     ForumTopicClosed, ForumTopicCreated, Story
 
 class CallbackGame:

@@ -2,8 +2,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 import json
-from telegram.bot.config import UPDATE_HANDLER
-from telegram.bot.UpdatingMessages.Update import Update
+from monogram.bot.config import UPDATE_HANDLER
+from monogram.bot.UpdatingMessages.Update import Update
 
 
 @csrf_exempt

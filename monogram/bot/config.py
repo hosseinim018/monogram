@@ -3,7 +3,7 @@ from configparser import ConfigParser
 from django.conf import settings
 import os
 
-config_path = os.path.join(settings.BASE_DIR, "telegram/bot/config.ini")
+config_path = os.path.join(settings.BASE_DIR, "monogram/bot/config.ini")
 config = ConfigParser()
 config.read(config_path)
 def configs(filename='config.ini', section='admins'):
@@ -21,7 +21,7 @@ def configs(filename='config.ini', section='admins'):
         raise Exception('Section {0} not found in the {1} file'.format(section, filename))
 
     return db
-configs = configs(filename=config_path, section='telegram')
+configs = configs(filename=config_path, section='monogram')
 
 class monogram:
     def __init__(self, token, secret_token, endpoint, proxy, proxy_url):
@@ -36,7 +36,7 @@ print(config)
 # Each bot is given a unique authentication token when it is created.
 # The token looks something like 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
 # Replace 'YOUR_BOT_TOKEN' with your actual bot token obtained from @BotFather in Telegram
-# TOKEN: str = config.get('telegram', 'token')
+# TOKEN: str = config.get('monogram', 'token')
 TOKEN: str = '968534296:AAG6OR6RNnBKhwLk8DR1b6SjIoSVUpTxu6Y'
 
 # Hash TOKEN with hashlib.sha256
@@ -65,7 +65,7 @@ PROXIES = PROXIES if PROXY else None
 
 
 # in this dictionary add function
-from telegram.Updates import Callback_Queries, Messages
+from monogram.Updates import Callback_Queries, Messages
 
 UPDATE_HANDLER = {
     'callback_query': [

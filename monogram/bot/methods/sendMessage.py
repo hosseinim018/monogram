@@ -1,6 +1,6 @@
 from typing import Optional, Dict, Any
-from telegram.bot.core.telegram import telegram
-from telegram.bot.text import format_text
+from monogram.bot.core.telegram import telegram
+from monogram.bot.text import format_text
 
 
 def send_message(chat_id: int, text: str, message_thread_id: Optional[int] = None,
@@ -68,6 +68,6 @@ def send_message(chat_id: int, text: str, message_thread_id: Optional[int] = Non
     if reply_markup is not None:
         data['reply_markup'] = reply_markup
 
-    # send post request to telegram based on method sendMessage, Construct the API endpoint URL
+    # send post request to monogram based on method sendMessage, Construct the API endpoint URL
     telegram('sendMessage', data)
 

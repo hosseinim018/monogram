@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet
-from telegram.bot.config import TOKEN
+from monogram.bot.config import TOKEN
 
 
 class TokenEncryptor:

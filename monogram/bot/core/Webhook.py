@@ -1,6 +1,6 @@
-from telegram.bot.config import API_ENDPOINT, config, config_path
+from monogram.bot.config import API_ENDPOINT, config, config_path
 import requests
-from telegram.bot.core.Core import TokenEncryptor
+from monogram.bot.core.Core import TokenEncryptor
 
 
 class Webhook:
@@ -50,7 +50,7 @@ class Webhook:
             payload['secret_token'] = secret_token
         else:
             TOKEN_ENCRYPTOR = TokenEncryptor()
-            config.set('telegram', 'secret_token', TOKEN_ENCRYPTOR.encrypted_token)
+            config.set('monogram', 'secret_token', TOKEN_ENCRYPTOR.encrypted_token)
             with open(config_path, 'w') as configfile:
                 config.write(configfile)
             payload['secret_token'] = TOKEN_ENCRYPTOR.encrypted_token

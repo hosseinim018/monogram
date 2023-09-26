@@ -1,6 +1,6 @@
 from typing import Optional
-from telegram.bot.types import WebAppInfo, LoginUrl, SwitchInlineQueryChosenChat
-from telegram.bot.core.Core import validate_payload
+from monogram.bot.types import WebAppInfo, LoginUrl, SwitchInlineQueryChosenChat
+from monogram.bot.core.Core import validate_payload
 
 class CallbackGame:
     pass

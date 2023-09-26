@@ -57,6 +57,6 @@ def edit_message(text: str, chat_id: Optional[int]= None, message_id: Optional[i
     if reply_markup is not None:
         data['reply_markup'] = reply_markup
 
-    # send post request to telegram based on method editMessageText, Construct the API endpoint URL
+    # send post request to monogram based on method editMessageText, Construct the API endpoint URL
     telegram('editMessageText', data)
     
