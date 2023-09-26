@@ -15,14 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from telegram import views
-
+from bot1.views import tst
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # path('bot', views.bot, name='bot'),
     path('bot', views.UpdateHandler, name='bot'),
     # path('bot', test.as_view(), name='bot'),
+    path('bot1', tst, name='bot1'),
+    # path("bot1", include('bot1.urls'))
 
 ]

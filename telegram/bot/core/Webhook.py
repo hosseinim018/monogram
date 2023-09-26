@@ -1,5 +1,6 @@
-from telegram.bot.config import API_ENDPOINT, SECRET_TOKEN
+from telegram.bot.config import API_ENDPOINT, config, config_path
 import requests
+from telegram.bot.core.Core import TokenEncryptor
 
 
 class Webhook:
@@ -48,7 +49,13 @@ class Webhook:
         if secret_token:
             payload['secret_token'] = secret_token
         else:
-            payload['secret_token'] = SECRET_TOKEN
+            TOKEN_ENCRYPTOR = TokenEncryptor()
+            config.set('telegram', 'secret_token', TOKEN_ENCRYPTOR.encrypted_token)
+            with open(config_path, 'w') as configfile:
+                config.write(configfile)
+            payload['secret_token'] = TOKEN_ENCRYPTOR.encrypted_token
+
+
 
         response = requests.post(self.base_url + 'setWebhook', json=payload)
         return response.json().get('ok', False)

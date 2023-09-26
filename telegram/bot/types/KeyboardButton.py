@@ -3,7 +3,7 @@ from .KeyboardButtonPollType import KeyboardButtonPollType
 from .WebAppInfo import WebAppInfo
 from .KeyboardButtonRequestUser import KeyboardButtonRequestUser
 from .KeyboardButtonRequestChat import KeyboardButtonRequestChat
-from telegram.bot.core import validate_payload
+from telegram.bot.core.Core import validate_payload
 class KeyboardButton:
     """
     This object represents one button of the reply keyboard.

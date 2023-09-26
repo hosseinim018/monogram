@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, List
 from telegram.bot.types import *
-from telegram.sendMessage import send_message
-
+from telegram.bot.methods.sendMessage import send_message
 
 class Invoice:
     def __init__(self, **kwargs):

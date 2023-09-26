@@ -1,6 +1,6 @@
 from typing import Optional, List
 from .KeyboardButton import KeyboardButton
-from telegram.bot.core import validate_payload
+from telegram.bot.core.Core import validate_payload
 
 
 class ReplyKeyboardMarkup:
