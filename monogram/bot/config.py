@@ -22,7 +22,7 @@ def configs(filename='config.ini', section='admins'):
 
     return db
 configs = configs(filename=config_path, section='monogram')
-
+print(configs)
 class monogram:
     def __init__(self, token, secret_token, endpoint, proxy, proxy_url):
         self.token = token
