@@ -6,6 +6,8 @@ from functools import wraps
 from django.http import HttpResponse
 from configparser import ConfigParser
 from django.conf import settings
+from cryptography.fernet import Fernet
+
 
 
 class Monogram:
@@ -73,12 +75,6 @@ class Monogram:
         if res:
             return response
 
-
-
-
-
-
-from cryptography.fernet import Fernet
 
 class TokenEncryptor(Monogram):
     """
