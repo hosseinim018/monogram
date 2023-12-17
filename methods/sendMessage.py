@@ -1,8 +1,7 @@
 from typing import Optional, Dict, Any
 from monogram import Monogram, validate_payload
-from monogram.text import format_text
 
-class send_message(Monogram):
+class sendMessage(Monogram):
 
     def __new__(cls, chat_id: int, text: str, message_thread_id: Optional[int] = None,
                     parse_mode: Optional[str] = 'html', entities: Optional[Dict[str, Any]] = None,
