@@ -29,5 +29,5 @@ class sendContact(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='sendVideo', data=payload, res=True)
+        response = cls.request(cls, method='sendContact', data=payload, res=True)
         return response.json()
