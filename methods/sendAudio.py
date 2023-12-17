@@ -1,6 +1,7 @@
-import requests
+from monogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply, InputFile
 from typing import Union, Optional, List, Dict
 from monogram import Monogram, validate_payload
+
 class sendAudio(Monogram):
     def __new__(cls, chat_id: Union[int, str], audio: Union[str, InputFile],
                    message_thread_id: Optional[int] = None, caption: Optional[str] = None,
