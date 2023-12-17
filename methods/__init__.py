@@ -1,7 +1,7 @@
-from .getMe import getMe
-from .logOut import logOut
-from .close import close
-from .sendMessage import send_message
+# from .getMe import getMe
+# from .logOut import logOut
+# from .close import close
+from .sendMessage import sendMessage
 from .forwardMessage import forwardMessage
 from .copyMessage import copyMessage
 from .sendPhoto import sendPhoto
@@ -77,10 +77,10 @@ from .setMyDefaultAdministratorRights import setMyDefaultAdministratorRights
 from .getMyDefaultAdministratorRights import getMyDefaultAdministratorRights
 
 __all__= [
-    'getMe',
-    'logOut',
-    'close',
-    'send_message',
+    # 'getMe',
+    # 'logOut',
+    # 'close',
+    'sendMessage',
     'forwardMessage',
     'copyMessage',
     'sendPhoto',
