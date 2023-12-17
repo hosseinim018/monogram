@@ -4,6 +4,9 @@ import logging
 import re
 from functools import wraps
 from django.http import HttpResponse
+from configparser import ConfigParser
+from django.conf import settings
+
 
 class Monogram:
     def __new__(cls, token, secret_token, endpoint, api_endpoint, proxy, proxy_url,*args, **kwargs):
@@ -115,10 +118,6 @@ def validate_payload(_locals):
     payload = {k: v for k, v in _locals.items() if v}  # Remove None values from payload
     return payload
 
-
-
-from configparser import ConfigParser
-from django.conf import settings
 
 def configs(appname, section='monogram'):
 
