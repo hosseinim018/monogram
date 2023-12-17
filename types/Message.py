@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, List
 from monogram.types import *
-from monogram.methods.sendMessage import send_message
+from monogram.methods import sendMessage
 
 
 class Invoice:
@@ -222,13 +222,13 @@ class Message:
 
     def answer(self, text: str, keyboard=None):
         if keyboard:
-            send_message(chat_id=self.chat.id, text=text, reply_markup=keyboard)
+            sendMessage(chat_id=self.chat.id, text=text, reply_markup=keyboard)
         else:
-            send_message(chat_id=self.chat.id, text=text)
+            sendMessage(chat_id=self.chat.id, text=text)
 
     def reply(self, text: str, keyboard):
         if keyboard:
-            send_message(chat_id=self.chat.id, reply_to_message_id=self.message_id, text=text,
+            sendMessage(chat_id=self.chat.id, reply_to_message_id=self.message_id, text=text,
                          reply_markup=keyboard)
         else:
-            send_message(chat_id=self.chat.id, text=text, reply_to_message_id=self.message_id)
+            sendMessage(chat_id=self.chat.id, text=text, reply_to_message_id=self.message_id)
