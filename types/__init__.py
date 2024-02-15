@@ -20,7 +20,6 @@ from .MessageAutoDeleteTimerChanged import MessageAutoDeleteTimerChanged
 from .ForumTopicCreated import ForumTopicCreated
 from .ForumTopicEdited import ForumTopicEdited
 from .UserShared import UserShared
-from .InlineKeyboardMarkup import InlineKeyboardMarkup
 from .VideoChatParticipantsInvited import VideoChatParticipantsInvited
 from .VideoChatEnded import VideoChatEnded
 from .WriteAccessAllowed import WriteAccessAllowed
@@ -182,5 +181,5 @@ __all__ = [
     "InputMediaDocument",
     "InputFile",
     "ChatShared",
-    "CallbackGame"
+    "CallbackGame",
 ]
