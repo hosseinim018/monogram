@@ -1,6 +1,7 @@
 from typing import Optional
 from .User import User
 
+
 class ChatInviteLink:
     """
     This class represents an invite link for a chat.
@@ -16,7 +17,7 @@ class ChatInviteLink:
         name: Optional[str] = None,
         expire_date: Optional[int] = None,
         member_limit: Optional[int] = None,
-        pending_join_request_count: Optional[int] = None
+        pending_join_request_count: Optional[int] = None,
     ):
         """
         Initialize a ChatInviteLink object.
@@ -45,4 +46,3 @@ class ChatInviteLink:
         self.expire_date = expire_date
         self.member_limit = member_limit
         self.pending_join_request_count = pending_join_request_count
-

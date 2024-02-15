@@ -3,6 +3,7 @@ from .User import User
 from .ChatMember import ChatMember
 from .ChatInviteLink import ChatInviteLink
 
+
 class ChatMemberUpdated:
     """
     This class represents changes in the status of a chat member.

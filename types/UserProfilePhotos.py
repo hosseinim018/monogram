@@ -1,6 +1,7 @@
 from typing import List
 from .PhotoSize import PhotoSize
 
+
 class UserProfilePhotos:
     """
     This class represents a user's profile pictures.

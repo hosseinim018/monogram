@@ -4,7 +4,11 @@ from typing import Optional, List
 
 
 class getMyCommands(Monogram):
-    def __new__(cls, scope: Optional[BotCommandScope] = None, language_code: Optional[str] = None) -> List[BotCommand]:
+    def __new__(
+        cls,
+        scope: Optional[BotCommandScope] = None,
+        language_code: Optional[str] = None,
+    ) -> List[BotCommand]:
         """
         Use this method to get the current list of the bot's commands for the given scope and user language.
         Returns a list of BotCommand objects. If commands aren't set, an empty list is returned.
@@ -16,5 +20,5 @@ class getMyCommands(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='getMyCommands', data=payload, res=True)
+        response = cls.request(cls, method="getMyCommands", data=payload, res=True)
         return response.json()

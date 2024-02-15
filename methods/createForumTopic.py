@@ -1,5 +1,6 @@
 from monogram import Monogram, validate_payload
 
+
 class createForumTopic(Monogram):
     def __new__(cls, chat_id, name, icon_color=None, icon_custom_emoji_id=None):
         """
@@ -15,5 +16,5 @@ class createForumTopic(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='createForumTopic', data=payload, res=True)
+        response = cls.request(cls, method="createForumTopic", data=payload, res=True)
         return response.json()

@@ -1,5 +1,6 @@
 from monogram import Monogram, validate_payload
 
+
 class deleteForumTopic(Monogram):
     def __new__(cls, chat_id, message_thread_id):
         """
@@ -13,5 +14,5 @@ class deleteForumTopic(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='deleteForumTopic', data=payload, res=True)
+        response = cls.request(cls, method="deleteForumTopic", data=payload, res=True)
         return response.json()

@@ -2,8 +2,14 @@ from typing import List, Optional
 from monogram.types import BotCommand, BotCommandScope
 from monogram import Monogram, validate_payload
 
+
 class setMyCommands(Monogram):
-    def __new__(cls, commands: List[BotCommand], scope: Optional[BotCommandScope] = None, language_code: Optional[str] = None) -> bool:
+    def __new__(
+        cls,
+        commands: List[BotCommand],
+        scope: Optional[BotCommandScope] = None,
+        language_code: Optional[str] = None,
+    ) -> bool:
         """
         Use this method to change the list of the bot's commands.
         Returns True on success.
@@ -19,5 +25,5 @@ class setMyCommands(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='setMyCommands', data=payload, res=True)
+        response = cls.request(cls, method="setMyCommands", data=payload, res=True)
         return response.json()

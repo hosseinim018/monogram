@@ -1,5 +1,6 @@
 from .User import User
 
+
 class ChatMemberBanned:
     """
     This class represents a chat member who was banned in the chat and can't return or view chat messages.
@@ -18,4 +19,3 @@ class ChatMemberBanned:
         self.status = status
         self.user = user
         self.until_date = until_date
-

@@ -1,13 +1,14 @@
 from typing import Union, Optional
 from monogram import Monogram, validate_payload
 
+
 class banChatMember(Monogram):
     def __new__(
-            cls,
+        cls,
         chat_id: Union[int, str],
         user_id: int,
         until_date: Optional[int] = None,
-        revoke_messages: Optional[bool] = False
+        revoke_messages: Optional[bool] = False,
     ) -> bool:
         """
         Use this method to ban a user in a group, a supergroup, or a channel.
@@ -28,5 +29,5 @@ class banChatMember(Monogram):
         # Your implementation here
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='banChatMember', data=payload, res=True)
+        response = cls.request(cls, method="banChatMember", data=payload, res=True)
         return response.json()

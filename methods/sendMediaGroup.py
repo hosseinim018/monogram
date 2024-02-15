@@ -1,13 +1,27 @@
 from typing import Union, Optional, List
 from monogram import Monogram, validate_payload
-from monogram.types import InputMediaAudio, InputMediaDocument,InputMediaPhoto, InputMediaVideo, Message
+from monogram.types import (
+    InputMediaAudio,
+    InputMediaDocument,
+    InputMediaPhoto,
+    InputMediaVideo,
+    Message,
+)
+
 
 class sendMediaGroup(Monogram):
-    def __new__(cls, chat_id: Union[int, str], media: List[Union[InputMediaAudio, InputMediaDocument,
-                                                                       InputMediaPhoto, InputMediaVideo]],
-                         message_thread_id: Optional[int] = None, disable_notification: Optional[bool] = None,
-                         protect_content: Optional[bool] = None, reply_to_message_id: Optional[int] = None,
-                         allow_sending_without_reply: Optional[bool] = None) -> List[Message]:
+    def __new__(
+        cls,
+        chat_id: Union[int, str],
+        media: List[
+            Union[InputMediaAudio, InputMediaDocument, InputMediaPhoto, InputMediaVideo]
+        ],
+        message_thread_id: Optional[int] = None,
+        disable_notification: Optional[bool] = None,
+        protect_content: Optional[bool] = None,
+        reply_to_message_id: Optional[int] = None,
+        allow_sending_without_reply: Optional[bool] = None,
+    ) -> List[Message]:
         """
         Use this method to send a group of photos, videos, documents or audios as an album.
         On success, an array of Messages that were sent is returned.
@@ -24,5 +38,5 @@ class sendMediaGroup(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='sendMediaGroup', data=payload, res=True)
+        response = cls.request(cls, method="sendMediaGroup", data=payload, res=True)
         return response.json()

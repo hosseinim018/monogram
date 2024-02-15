@@ -1,14 +1,33 @@
 from typing import Union, Optional
 from monogram import Monogram, validate_payload
-from monogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply, Message
+from monogram.types import (
+    InlineKeyboardMarkup,
+    ReplyKeyboardMarkup,
+    ReplyKeyboardRemove,
+    ForceReply,
+    Message,
+)
+
 
 class sendDice(Monogram):
-    def __new__(cls, chat_id: Union[int, str], emoji: Optional[str] = "🎲",
-                  message_thread_id: Optional[int] = None, disable_notification: Optional[bool] = None,
-                  protect_content: Optional[bool] = None, reply_to_message_id: Optional[int] = None,
-                  allow_sending_without_reply: Optional[bool] = None,
-                  reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
-                                                ReplyKeyboardRemove, ForceReply]] = None) -> Message:
+    def __new__(
+        cls,
+        chat_id: Union[int, str],
+        emoji: Optional[str] = "🎲",
+        message_thread_id: Optional[int] = None,
+        disable_notification: Optional[bool] = None,
+        protect_content: Optional[bool] = None,
+        reply_to_message_id: Optional[int] = None,
+        allow_sending_without_reply: Optional[bool] = None,
+        reply_markup: Optional[
+            Union[
+                InlineKeyboardMarkup,
+                ReplyKeyboardMarkup,
+                ReplyKeyboardRemove,
+                ForceReply,
+            ]
+        ] = None,
+    ) -> Message:
         """
         Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.
 
@@ -28,5 +47,5 @@ class sendDice(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='sendDice', data=payload, res=True)
+        response = cls.request(cls, method="sendDice", data=payload, res=True)
         return response.json()

@@ -1,5 +1,6 @@
 from .WebAppInfo import WebAppInfo
 
+
 class MenuButtonWebApp:
     """
     Represents a menu button that launches a Web App.

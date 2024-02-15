@@ -2,6 +2,7 @@ from typing import Optional
 from monogram import Monogram, validate_payload
 from monogram.types import File
 
+
 class getFile(Monogram):
     def __new__(cls, file_id: str) -> File:
         """
@@ -18,5 +19,5 @@ class getFile(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='getFile', data=payload, res=True)
+        response = cls.request(cls, method="getFile", data=payload, res=True)
         return response.json()

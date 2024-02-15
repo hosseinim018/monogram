@@ -1,8 +1,12 @@
 from typing import Optional
 from monogram import Monogram, validate_payload
 from monogram.types import UserProfilePhotos
+
+
 class getUserProfile(Monogram):
-    def __new__(cls, user_id: int, offset: Optional[int] = None, limit: Optional[int] = 100) -> UserProfilePhotos:
+    def __new__(
+        cls, user_id: int, offset: Optional[int] = None, limit: Optional[int] = 100
+    ) -> UserProfilePhotos:
         """
         Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
 
@@ -13,5 +17,5 @@ class getUserProfile(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='getUserProfile', data=payload, res=True)
+        response = cls.request(cls, method="getUserProfile", data=payload, res=True)
         return response.json()

@@ -4,14 +4,23 @@ from .WebAppInfo import WebAppInfo
 from .KeyboardButtonRequestUser import KeyboardButtonRequestUser
 from .KeyboardButtonRequestChat import KeyboardButtonRequestChat
 from monogram import validate_payload
+
+
 class KeyboardButton:
     """
     This object represents one button of the reply keyboard.
     """
-    def __new__(self, text: str, request_user: Optional[KeyboardButtonRequestUser] = None,
-                 request_chat: Optional[KeyboardButtonRequestChat] = None,
-                 request_contact: Optional[bool] = None, request_location: Optional[bool] = None,
-                 request_poll: Optional[KeyboardButtonPollType] = None, web_app: Optional[WebAppInfo] = None):
+
+    def __new__(
+        self,
+        text: str,
+        request_user: Optional[KeyboardButtonRequestUser] = None,
+        request_chat: Optional[KeyboardButtonRequestChat] = None,
+        request_contact: Optional[bool] = None,
+        request_location: Optional[bool] = None,
+        request_poll: Optional[KeyboardButtonPollType] = None,
+        web_app: Optional[WebAppInfo] = None,
+    ):
         """
         Initialize a KeyboardButton object.
 
@@ -25,4 +34,3 @@ class KeyboardButton:
         """
         payload = validate_payload(locals().copy())
         return payload
-

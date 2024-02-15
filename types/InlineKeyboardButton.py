@@ -11,11 +11,19 @@ class InlineKeyboardButton:
         This object represents one button of an inline keyboard.
         """
 
-    def __new__(cls, text: str, url: Optional[str] = None, callback_data: Optional[str] = None,
-                web_app: Optional[WebAppInfo] = None, login_url: Optional[LoginUrl] = None,
-                switch_inline_query: Optional[str] = None, switch_inline_query_current_chat: Optional[str] = None,
-                switch_inline_query_chosen_chat: Optional[SwitchInlineQueryChosenChat] = None,
-                callback_game: Optional[CallbackGame] = None, pay: Optional[bool] = None) -> dict:
+    def __new__(
+        cls,
+        text: str,
+        url: Optional[str] = None,
+        callback_data: Optional[str] = None,
+        web_app: Optional[WebAppInfo] = None,
+        login_url: Optional[LoginUrl] = None,
+        switch_inline_query: Optional[str] = None,
+        switch_inline_query_current_chat: Optional[str] = None,
+        switch_inline_query_chosen_chat: Optional[SwitchInlineQueryChosenChat] = None,
+        callback_game: Optional[CallbackGame] = None,
+        pay: Optional[bool] = None,
+    ) -> dict:
         """
             Initialize an InlineKeyboardButton object.
 

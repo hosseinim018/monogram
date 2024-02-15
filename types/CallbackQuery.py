@@ -2,13 +2,22 @@ from typing import Optional
 from .Message import Message
 from .User import User
 
+
 class CallbackQuery:
     """
     This object represents an incoming callback query from a callback button in an inline keyboard.
     """
-    def __init__(self, id: str, from_user: dict, message: dict = None,
-                 inline_message_id: Optional[str] = None, chat_instance: str = None,
-                 data: Optional[str] = None, game_short_name: Optional[str] = None):
+
+    def __init__(
+        self,
+        id: str,
+        from_user: dict,
+        message: dict = None,
+        inline_message_id: Optional[str] = None,
+        chat_instance: str = None,
+        data: Optional[str] = None,
+        game_short_name: Optional[str] = None,
+    ):
         """
         Initialize a CallbackQuery object.
 

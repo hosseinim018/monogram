@@ -2,6 +2,7 @@ from typing import List, Optional
 from .PollOption import PollOption
 from .MessageEntity import MessageEntity
 
+
 class Poll:
     """
     This class contains information about a poll.
@@ -21,7 +22,7 @@ class Poll:
         explanation: Optional[str] = None,
         explanation_entities: Optional[List[MessageEntity]] = None,
         open_period: Optional[int] = None,
-        close_date: Optional[int] = None
+        close_date: Optional[int] = None,
     ):
         """
         Initialize a Poll object.
@@ -58,4 +59,3 @@ class Poll:
         self.explanation_entities = explanation_entities
         self.open_period = open_period
         self.close_date = close_date
-

@@ -1,6 +1,7 @@
 from typing import List
 from .User import User
 
+
 class VideoChatParticipantsInvited:
     """
     This class represents a service message about new members invited to a video chat.

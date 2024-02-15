@@ -1,6 +1,7 @@
 from typing import Optional
 from .User import User
 
+
 class ChatMemberOwner:
     """
     This class represents a chat member that owns the chat and has all administrator privileges.
@@ -11,7 +12,7 @@ class ChatMemberOwner:
         status: str,
         user: User,
         is_anonymous: bool,
-        custom_title: Optional[str] = None
+        custom_title: Optional[str] = None,
     ):
         """
         Initialize a ChatMemberOwner object.

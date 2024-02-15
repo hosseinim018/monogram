@@ -2,6 +2,7 @@ from .Chat import Chat
 from .User import User
 from .ChatInviteLink import ChatInviteLink
 
+
 class ChatJoinRequest:
     """
     This class represents a join request sent to a chat.

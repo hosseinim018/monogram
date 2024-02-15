@@ -1,21 +1,43 @@
 from typing import Union, Optional, List
 from monogram import Monogram, validate_payload
-from monogram.types import InputFile, MessageEntity, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply, Message
+from monogram.types import (
+    InputFile,
+    MessageEntity,
+    InlineKeyboardMarkup,
+    ReplyKeyboardMarkup,
+    ReplyKeyboardRemove,
+    ForceReply,
+    Message,
+)
+
 
 class sendAnimation(Monogram):
-    def __new__(cls, chat_id: Union[int, str], message_thread_id: Optional[int] = None,
-                       animation: Union[InputFile, str]=None, duration: Optional[int] = None,
-                       width: Optional[int] = None, height: Optional[int] = None,
-                       thumbnail: Optional[Union[InputFile, str]] = None,
-                       caption: Optional[str] = None, parse_mode: Optional[str] = None,
-                       caption_entities: Optional[List[MessageEntity]] = None,
-                       has_spoiler: Optional[bool] = None,
-                       disable_notification: Optional[bool] = None,
-                       protect_content: Optional[bool] = None,
-                       reply_to_message_id: Optional[int] = None,
-                       allow_sending_without_reply: Optional[bool] = None,
-                       reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
-                                                     ReplyKeyboardRemove, ForceReply]] = None) -> Message:
+    def __new__(
+        cls,
+        chat_id: Union[int, str],
+        message_thread_id: Optional[int] = None,
+        animation: Union[InputFile, str] = None,
+        duration: Optional[int] = None,
+        width: Optional[int] = None,
+        height: Optional[int] = None,
+        thumbnail: Optional[Union[InputFile, str]] = None,
+        caption: Optional[str] = None,
+        parse_mode: Optional[str] = None,
+        caption_entities: Optional[List[MessageEntity]] = None,
+        has_spoiler: Optional[bool] = None,
+        disable_notification: Optional[bool] = None,
+        protect_content: Optional[bool] = None,
+        reply_to_message_id: Optional[int] = None,
+        allow_sending_without_reply: Optional[bool] = None,
+        reply_markup: Optional[
+            Union[
+                InlineKeyboardMarkup,
+                ReplyKeyboardMarkup,
+                ReplyKeyboardRemove,
+                ForceReply,
+            ]
+        ] = None,
+    ) -> Message:
         """
         Use this method to send animation files. On success, the sent Message is returned.
         Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
@@ -49,5 +71,5 @@ class sendAnimation(Monogram):
         # Your implementation here
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='sendAnimation', data=payload, res=True)
+        response = cls.request(cls, method="sendAnimation", data=payload, res=True)
         return response.json()

@@ -2,13 +2,15 @@ from typing import Union, Optional
 from monogram import Monogram, validate_payload
 from monogram.types import ChatPermissions
 
+
 class restrictChatMember(Monogram):
-    def __new__(cls,
+    def __new__(
+        cls,
         chat_id: Union[int, str],
         user_id: int,
         permissions: ChatPermissions,
         use_independent_chat_permissions: Optional[bool] = None,
-        until_date: Optional[int] = None
+        until_date: Optional[int] = None,
     ) -> bool:
         """
         Use this method to restrict a user in a supergroup.
@@ -31,5 +33,5 @@ class restrictChatMember(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='restrictChatMember', data=payload, res=True)
+        response = cls.request(cls, method="restrictChatMember", data=payload, res=True)
         return response.json()

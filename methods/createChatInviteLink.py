@@ -1,13 +1,15 @@
 from typing import Union
 from monogram import Monogram, validate_payload
 
+
 class createChatInviteLink(Monogram):
-    def __new__(cls,
+    def __new__(
+        cls,
         chat_id: Union[int, str],
         name: str = None,
         expire_date: int = None,
         member_limit: int = None,
-        creates_join_request: bool = False
+        creates_join_request: bool = False,
     ) -> dict:
         """
         Use this method to create an additional invite link for a chat.
@@ -26,5 +28,7 @@ class createChatInviteLink(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='createChatInviteLink', data=payload, res=True)
+        response = cls.request(
+            cls, method="createChatInviteLink", data=payload, res=True
+        )
         return response.json()

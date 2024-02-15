@@ -2,6 +2,7 @@ from typing import Optional, List
 from .User import User
 from .Chat import Chat
 
+
 class PollAnswer:
     """
     This class represents an answer of a user in a non-anonymous poll.
@@ -12,7 +13,7 @@ class PollAnswer:
         poll_id: str,
         voter_chat: Optional[Chat] = None,
         user: Optional[User] = None,
-        option_ids: List[int] = []
+        option_ids: List[int] = [],
     ):
         """
         Initialize a PollAnswer object.
@@ -27,4 +28,3 @@ class PollAnswer:
         self.voter_chat = voter_chat
         self.user = user
         self.option_ids = option_ids
-

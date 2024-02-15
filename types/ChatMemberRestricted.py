@@ -1,4 +1,6 @@
 from .User import User
+
+
 class ChatMemberRestricted:
     """
     This class represents a chat member with certain restrictions in the chat. Only applicable to supergroups.
@@ -69,4 +71,3 @@ class ChatMemberRestricted:
         self.can_pin_messages = can_pin_messages
         self.can_manage_topics = can_manage_topics
         self.until_date = until_date
-

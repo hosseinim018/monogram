@@ -1,6 +1,7 @@
 from typing import Optional
 from .User import User
 
+
 class ChatMemberAdministrator:
     """
     This class represents a chat member that has some additional privileges.
@@ -23,7 +24,7 @@ class ChatMemberAdministrator:
         can_edit_messages: Optional[bool] = None,
         can_pin_messages: Optional[bool] = None,
         can_manage_topics: Optional[bool] = None,
-        custom_title: Optional[str] = None
+        custom_title: Optional[str] = None,
     ):
         """
         Initialize a ChatMemberAdministrator object.
@@ -62,4 +63,3 @@ class ChatMemberAdministrator:
         self.can_pin_messages = can_pin_messages
         self.can_manage_topics = can_manage_topics
         self.custom_title = custom_title
-

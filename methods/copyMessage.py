@@ -1,15 +1,24 @@
-import requests
 from typing import Union, Optional, List, Dict
 from monogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply
 from monogram import Monogram, validate_payload
-class copyMessage(Monogram):
 
-    def __new__(cls, chat_id: Union[int, str], from_chat_id: Union[int, str], message_id: int,
-                     message_thread_id: Optional[int] = None, caption: Optional[str] = None,
-                     parse_mode: Optional[str] = None, caption_entities: Optional[List[Dict]] = None,
-                     disable_notification: Optional[bool] = False, protect_content: Optional[bool] = False,
-                     reply_to_message_id: Optional[int] = None, allow_sending_without_reply: Optional[bool] = False,
-                     reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]] = None) -> dict:
+
+class copyMessage(Monogram):
+    def __new__(
+        cls,
+        chat_id: Union[int, str],
+        from_chat_id: Union[int, str],
+        message_id: int,
+        message_thread_id: Optional[int] = None,
+        caption: Optional[str] = None,
+        parse_mode: Optional[str] = None,
+        caption_entities: Optional[List[Dict]] = None,
+        disable_notification: Optional[bool] = False,
+        protect_content: Optional[bool] = False,
+        reply_to_message_id: Optional[int] = None,
+        allow_sending_without_reply: Optional[bool] = False,
+        reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]] = None,
+    ) -> dict:
         """
         Use this method to copy messages of any kind.
         Service messages and invoice messages can't be copied.
@@ -39,5 +48,5 @@ class copyMessage(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='copyMessage', data=payload, res=True)
+        response = cls.request(cls, method="copyMessage", data=payload, res=True)
         return response.json()

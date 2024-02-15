@@ -1,17 +1,38 @@
 from typing import Union, Optional
 from monogram import Monogram, validate_payload
-from monogram.types import InputFile, MessageEntity, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply, Message
+from monogram.types import (
+    InputFile,
+    MessageEntity,
+    InlineKeyboardMarkup,
+    ReplyKeyboardMarkup,
+    ReplyKeyboardRemove,
+    ForceReply,
+    Message,
+)
+
 
 class sendVideoNote(Monogram):
-    def __new__(cls, chat_id: Union[int, str], message_thread_id: Optional[int] = None,
-                        video_note: Union[InputFile, str]=None, duration: Optional[int] = None,
-                        length: Optional[int] = None, thumbnail: Optional[Union[InputFile, str]] = None,
-                        disable_notification: Optional[bool] = None,
-                        protect_content: Optional[bool] = None,
-                        reply_to_message_id: Optional[int] = None,
-                        allow_sending_without_reply: Optional[bool] = None,
-                        reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup,
-                                                      ReplyKeyboardRemove, ForceReply]] = None) -> Message:
+    def __new__(
+        cls,
+        chat_id: Union[int, str],
+        message_thread_id: Optional[int] = None,
+        video_note: Union[InputFile, str] = None,
+        duration: Optional[int] = None,
+        length: Optional[int] = None,
+        thumbnail: Optional[Union[InputFile, str]] = None,
+        disable_notification: Optional[bool] = None,
+        protect_content: Optional[bool] = None,
+        reply_to_message_id: Optional[int] = None,
+        allow_sending_without_reply: Optional[bool] = None,
+        reply_markup: Optional[
+            Union[
+                InlineKeyboardMarkup,
+                ReplyKeyboardMarkup,
+                ReplyKeyboardRemove,
+                ForceReply,
+            ]
+        ] = None,
+    ) -> Message:
         """
         Use this method to send video messages. On success, the sent Message is returned.
 
@@ -35,5 +56,5 @@ class sendVideoNote(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='sendVideoNote', data=payload, res=True)
+        response = cls.request(cls, method="sendVideoNote", data=payload, res=True)
         return response.json()

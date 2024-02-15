@@ -1,6 +1,6 @@
 from typing import Optional, List
 from .KeyboardButton import KeyboardButton
-from monogram import validate_payload
+from monogram.core import validate_payload
 
 
 class ReplyKeyboardMarkup:
@@ -8,10 +8,15 @@ class ReplyKeyboardMarkup:
     This object represents a custom keyboard with reply options.
     """
 
-
-    def __new__(cls, keyboard: List[List[KeyboardButton]], is_persistent: Optional[bool] = False,
-                resize_keyboard: Optional[bool] = False, one_time_keyboard: Optional[bool] = False,
-                input_field_placeholder: Optional[str] = None, selective: Optional[bool] = None):
+    def __new__(
+        cls,
+        keyboard: List[List[KeyboardButton]],
+        is_persistent: Optional[bool] = False,
+        resize_keyboard: Optional[bool] = False,
+        one_time_keyboard: Optional[bool] = False,
+        input_field_placeholder: Optional[str] = None,
+        selective: Optional[bool] = None,
+    ):
         """
         Initialize a ReplyKeyboardMarkup object.
 

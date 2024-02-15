@@ -2,12 +2,13 @@ from monogram import Monogram, validate_payload
 
 
 class answerCallbackQuery(Monogram):
-    def __new__(cls,
+    def __new__(
+        cls,
         callback_query_id: str,
         text: str = None,
         show_alert: bool = False,
         url: str = None,
-        cache_time: int = 0
+        cache_time: int = 0,
     ) -> bool:
         """
         Use this method to send answers to callback queries sent from inline keyboards.
@@ -30,5 +31,7 @@ class answerCallbackQuery(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='answerCallbackQuery', data=payload, res=True)
+        response = cls.request(
+            cls, method="answerCallbackQuery", data=payload, res=True
+        )
         return response.json()

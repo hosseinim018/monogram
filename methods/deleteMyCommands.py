@@ -2,8 +2,13 @@ from typing import Optional
 from monogram import Monogram, validate_payload
 from monogram.types import BotCommandScope
 
+
 class deleteMyCommands(Monogram):
-    def __new__(cls, scope: Optional[BotCommandScope] = None, language_code: Optional[str] = None) -> bool:
+    def __new__(
+        cls,
+        scope: Optional[BotCommandScope] = None,
+        language_code: Optional[str] = None,
+    ) -> bool:
         """
         Use this method to delete the list of the bot's commands for the given scope and user language.
         After deletion, higher level commands will be shown to affected users.
@@ -18,5 +23,5 @@ class deleteMyCommands(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='deleteMyCommands', data=payload, res=True)
+        response = cls.request(cls, method="deleteMyCommands", data=payload, res=True)
         return response.json()

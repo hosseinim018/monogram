@@ -1,4 +1,6 @@
 from .User import User
+
+
 class ChatMemberMember:
     """
     This class represents a chat member with no additional privileges or restrictions.

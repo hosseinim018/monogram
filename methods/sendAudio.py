@@ -1,16 +1,40 @@
-from monogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply, InputFile
+from monogram.types import (
+    InlineKeyboardMarkup,
+    ReplyKeyboardMarkup,
+    ReplyKeyboardRemove,
+    ForceReply,
+    InputFile,
+)
 from typing import Union, Optional, List, Dict
 from monogram import Monogram, validate_payload
 
+
 class sendAudio(Monogram):
-    def __new__(cls, chat_id: Union[int, str], audio: Union[str, InputFile],
-                   message_thread_id: Optional[int] = None, caption: Optional[str] = None,
-                   parse_mode: Optional[str] = None, caption_entities: Optional[List[Dict]] = None,
-                   duration: Optional[int] = None, performer: Optional[str] = None,
-                   title: Optional[str] = None, thumbnail: Optional[Union[str, InputFile]] = None,
-                   disable_notification: Optional[bool] = False, protect_content: Optional[bool] = False,
-                   reply_to_message_id: Optional[int] = None, allow_sending_without_reply: Optional[bool] = False,
-                   reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply]] = None) -> dict:
+    def __new__(
+        cls,
+        chat_id: Union[int, str],
+        audio: Union[str, InputFile],
+        message_thread_id: Optional[int] = None,
+        caption: Optional[str] = None,
+        parse_mode: Optional[str] = None,
+        caption_entities: Optional[List[Dict]] = None,
+        duration: Optional[int] = None,
+        performer: Optional[str] = None,
+        title: Optional[str] = None,
+        thumbnail: Optional[Union[str, InputFile]] = None,
+        disable_notification: Optional[bool] = False,
+        protect_content: Optional[bool] = False,
+        reply_to_message_id: Optional[int] = None,
+        allow_sending_without_reply: Optional[bool] = False,
+        reply_markup: Optional[
+            Union[
+                InlineKeyboardMarkup,
+                ReplyKeyboardMarkup,
+                ReplyKeyboardRemove,
+                ForceReply,
+            ]
+        ] = None,
+    ) -> dict:
         """
         Use this method to send audio files, if you want Telegram clients to display them in the music player.
         Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned.
@@ -48,5 +72,5 @@ class sendAudio(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='sendAudio', data=payload, res=True)
+        response = cls.request(cls, method="sendAudio", data=payload, res=True)
         return response.json()

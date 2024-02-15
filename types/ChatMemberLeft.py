@@ -1,4 +1,6 @@
 from .User import User
+
+
 class ChatMemberLeft:
     """
     This class represents a chat member who is not currently a member of the chat but may join it themselves.

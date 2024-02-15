@@ -1,6 +1,7 @@
 from typing import Optional
 from .Location import Location
 
+
 class Venue:
     """
     This class represents a venue.
@@ -14,7 +15,7 @@ class Venue:
         foursquare_id: Optional[str] = None,
         foursquare_type: Optional[str] = None,
         google_place_id: Optional[str] = None,
-        google_place_type: Optional[str] = None
+        google_place_type: Optional[str] = None,
     ):
         """
         Initialize a Venue object.
@@ -35,4 +36,3 @@ class Venue:
         self.foursquare_type = foursquare_type
         self.google_place_id = google_place_id
         self.google_place_type = google_place_type
-

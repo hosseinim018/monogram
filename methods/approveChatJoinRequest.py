@@ -1,11 +1,9 @@
 from typing import Union
 from monogram import Monogram, validate_payload
 
+
 class approveChatJoinRequest(Monogram):
-    def __new__(cls,
-        chat_id: Union[int, str],
-        user_id: int
-    ) -> bool:
+    def __new__(cls, chat_id: Union[int, str], user_id: int) -> bool:
         """
         Use this method to approve a chat join request.
         The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right.
@@ -17,5 +15,7 @@ class approveChatJoinRequest(Monogram):
         """
         payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method='approveChatJoinRequest', data=payload, res=True)
+        response = cls.request(
+            cls, method="approveChatJoinRequest", data=payload, res=True
+        )
         return response.json()
