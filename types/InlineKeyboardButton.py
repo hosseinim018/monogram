@@ -1,6 +1,9 @@
 from typing import Optional
-from monogram.types import WebAppInfo, LoginUrl, SwitchInlineQueryChosenChat
 from monogram import validate_payload
+from .WebAppInfo import WebAppInfo
+from .LoginUrl import LoginUrl
+from .SwitchInlineQueryChosenChat import SwitchInlineQueryChosenChat
+
 
 class CallbackGame:
     pass
