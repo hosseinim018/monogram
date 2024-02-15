@@ -1,6 +1,7 @@
 from typing import Union
 from .ChatMemberOwner import ChatMemberOwner
 
+
 class ChatMember:
     """
     This class contains information about one member of a chat.
@@ -9,7 +10,14 @@ class ChatMember:
     def __init__(
         self,
         user_id: int,
-        status: Union[ChatMemberOwner, "ChatMemberAdministrator", "ChatMemberMember", "ChatMemberRestricted", "ChatMemberLeft", "ChatMemberBanned"]
+        status: Union[
+            ChatMemberOwner,
+            "ChatMemberAdministrator",
+            "ChatMemberMember",
+            "ChatMemberRestricted",
+            "ChatMemberLeft",
+            "ChatMemberBanned",
+        ],
     ):
         """
         Initialize a ChatMember object.
@@ -25,4 +33,5 @@ class ChatMember:
                     - ChatMemberLeft: Represents a chat member who left the chat.
                     - ChatMemberBanned: Represents a chat member who was banned.
         """
-        self.user_id = user
+        self.user_id = user_id
+        self.status = status
