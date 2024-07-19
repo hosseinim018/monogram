@@ -1,6 +1,6 @@
 from .deleteMessage import deleteMessage
 from .editMessageCaption import editMessageCaption
-from .editMessageText import edit_message
+from .editMessageText import editMessageText
 from .stopMessageLiveLocation import stop_message_live_location
 from .stopPoll import stop_poll
 from .editMessageLiveLocation import edit_message_live_location

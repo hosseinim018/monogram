@@ -73,6 +73,7 @@ class sendVideo(Monogram):
         """
         # Your implementation here
         payload = validate_payload(locals().copy())
+        print(payload)
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
         response = cls.request(cls, method="sendVideo", data=payload, res=True)
         return response.json()

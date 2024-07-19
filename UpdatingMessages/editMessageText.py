@@ -1,8 +1,8 @@
 from typing import Optional, Dict, Any
 from monogram.text import format_text
-from monogram import Monogram
+from monogram import Monogram, validate_payload
 
-class edit_message(Monogram):
+class editMessageText(Monogram):
     def __new__(cls, text: str, chat_id: Optional[int]= None, message_id: Optional[int] = None, message_thread_id: Optional[int] = None, inline_message_id: Optional[str] = None,
                      parse_mode: Optional[str] = 'html', entities: Optional[Dict[str, Any]] = None,
                      disable_web_page_preview: Optional[bool] = None, reply_markup: Optional[Dict[str, Any]] = None) -> None:
@@ -27,35 +27,6 @@ class edit_message(Monogram):
         Returns:
             None
         """
-
-        data = {}
-
-        if text is None:
-            raise 'text are required parameters'
-
-        data['text'] = format_text(text) # reformat text to html
-        data['parse_mode'] = parse_mode
-
-        if chat_id is not None:
-            data['chat_id'] = chat_id
-
-        if message_id is not None:
-            data['message_id'] = message_id
-
-        if message_thread_id is not None:
-            data['message_thread_id'] = message_thread_id
-
-        if inline_message_id is not None:
-            data['inline_message_id'] = inline_message_id
-
-        if entities is not None:
-            data['entities'] = entities
-
-        if disable_web_page_preview is not None:
-            data['disable_web_page_preview'] = disable_web_page_preview
-
-        if reply_markup is not None:
-            data['reply_markup'] = reply_markup
-
+        payload = validate_payload(locals().copy())
         # send post request to monogram based on method editMessageText, Construct the API endpoint URL
-        cls.request('editMessageText', data)
+        cls.request(cls, method='editMessageText', data=payload)

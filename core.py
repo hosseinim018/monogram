@@ -7,8 +7,8 @@ from django.http import HttpResponse
 from configparser import ConfigParser
 from django.conf import settings
 from cryptography.fernet import Fernet
-
-
+import os
+from monogram.text import format_text
 
 class Monogram:
     def __new__(cls, token, secret_token, endpoint, api_endpoint, proxy, proxy_url,*args, **kwargs):
@@ -16,9 +16,9 @@ class Monogram:
         cls.secret_token = secret_token
         cls.endpoint = endpoint
         cls.api_endpoint = api_endpoint
-        cls.proxy = bool(proxy)
+        cls.proxy = proxy
         cls.proxy_url = proxy_url
-        cls.session = requests.Session()
+        cls.session = requests.Session()\
 
         return super().__new__(cls)
 
@@ -26,14 +26,31 @@ class Monogram:
         def decorator(func):
             @wraps(func)
             def wrapper(Message, *args, **kwargs):
-                if re.match(pattern, Message.text):
+                if ((Message.text != None) and re.match(pattern, Message.text)) or ((Message.caption != None) and re.match(pattern, Message.caption)):
                     return func(Message, *args, **kwargs)
                 return HttpResponse("Hello, world!")
             return wrapper
         return decorator
 
+    def download_file(self, filename, dir_path, file_path):
+        url = f"https://{self.endpoint}/file/bot{self.token}/{file_path}"
+        # print(url)
+        # response = requests.get(url)
+        response =  self.session.get(url)
+        if not os.path.exists(dir_path):
+            # Create the directory using os.makedirs()
+            os.makedirs(dir_path)
+        filename = f"{dir_path}/{filename}"
+        # print(filename)
+        if response.status_code == 200:  # Check if the request was successful
+            with open(filename, 'wb') as file:
+                file.write(response.content)
+            return True
+        else:
+            return False
 
-    def request(self, method: str, data: dict, res:bool = False) -> None:
+
+    def request(self, method: str, data: dict, res:bool = False, files: dict=None) -> None:
         """
         send POST request to monogram based on monogram methods API.
 
@@ -62,8 +79,13 @@ class Monogram:
             # Send the request to monogram based on method
             # in config.py if you set PROXY to True session post with PROXIES that you set in config.py
             url = self.api_endpoint + method
-            response = self.session.post(url, json=data, proxies=PROXIES)
-            response.raise_for_status()  # Raise an exception for non-2xx status codes
+
+            if files:
+                response = self.session.post(url, data=data, files=files, proxies=PROXIES)
+            else:
+                response = self.session.post(url, json=data, proxies=PROXIES)
+
+            # response.raise_for_status()  # Raise an exception for non-2xx status codes
 
         except requests.exceptions.HTTPError as e:
             error_message = str(e)
@@ -89,6 +111,7 @@ class TokenEncryptor(Monogram):
         cls.cipher_suite = Fernet(cls.secret_key)  # Sets up the cipher suite for encryption and decryption.
         # Encrypts a token string:
         cls.encrypted_token: str = cls.cipher_suite.encrypt(cls.token.encode('utf-8')).decode()
+
     @classmethod
     def decrypt(cls, encrypted_token: bytes) -> str:
         """
@@ -111,6 +134,10 @@ def validate_payload(_locals):
         _locals.pop('self')
     if 'cls' in _locals:
         _locals.pop('cls')
+    if 'text' in _locals:
+        _locals['text'] = format_text(_locals['text'])
+    if 'caption' in _locals:
+        _locals['caption'] = format_text(_locals['caption']) if _locals['caption'] else _locals['caption']
     payload = {k: v for k, v in _locals.items() if v}  # Remove None values from payload
     return payload
 

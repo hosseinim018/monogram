@@ -6,6 +6,7 @@ from monogram.types import (
     ReplyKeyboardRemove,
     ForceReply,
     InputFile,
+    Message
 )
 
 
@@ -31,7 +32,7 @@ class sendPhoto(Monogram):
                 ForceReply,
             ]
         ] = None,
-    ) -> dict:
+    ) -> Message:
         """
         Use this method to send photos.
         On success, the sent Message is returned.
@@ -56,7 +57,28 @@ class sendPhoto(Monogram):
                              instructions to remove reply keyboard, or to force a reply from the user. (optional)
         :return: A dictionary containing the response from the API call
         """
-        payload = validate_payload(locals().copy())
         # send post request to telegram based on method sendMessage, Construct the API endpoint URL
-        response = cls.request(cls, method="sendPhoto", data=payload, res=True)
-        return response.json()
+        _locals = locals().copy()
+
+        if isinstance(photo, InputFile):
+            # print("photo is an InputFile object")
+            _locals.pop('photo')
+            payload = validate_payload(_locals)
+            file = open(photo.file_path, 'rb')
+            file = {"photo": file}
+
+            response = cls.request(cls, method="sendPhoto", data=payload, files=file, res=True)
+
+        else:
+            # print("photo is a string")
+            payload = validate_payload(_locals)
+            response = cls.request(cls, method="sendPhoto", data=payload, res=True)
+
+        response = response.json()
+        print(response)
+        result = response['result']
+        if result:
+            result["from_user"] = result.pop("from")
+
+
+        return Message(**result)

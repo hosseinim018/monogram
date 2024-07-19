@@ -1,6 +1,5 @@
 from typing import Optional
-from .Message import Message
-from .User import User
+from monogram.types import User, Message
 
 
 class CallbackQuery:
@@ -34,7 +33,10 @@ class CallbackQuery:
         """
         self.id = id
         self.from_user = User(**from_user)
-        self.message = Message(**message)
+        if message:
+            message["from_user"] = message.pop("from")
+            self.message = Message(**message)
+
         self.inline_message_id = inline_message_id
         self.chat_instance = chat_instance
         self.data = data

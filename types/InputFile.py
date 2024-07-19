@@ -1,4 +1,5 @@
 import os
+from django.conf import settings
 
 class InputFile:
     """
@@ -13,9 +14,8 @@ class InputFile:
             file_path (str): The path to the file to be uploaded.
             file_name (str, optional): The name of the file. If not provided, the original file name will be used.
         """
-        self.file_path = file_path
+        self.file_path = settings.BASE_DIR / file_path
         self.file_name = file_name or self._extract_file_name(file_path)
-
     @staticmethod
     def _extract_file_name(file_path: str) -> str:
         """

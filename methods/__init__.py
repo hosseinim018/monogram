@@ -43,6 +43,7 @@ from .unpinChatMessage import unpinChatMessage
 from .unpinAllChatMessages import unpinAllChatMessages
 from .leaveChat import leaveChat
 from .getChat import getChat
+from .getMe import getMe
 from .getChatAdministrators import getChatAdministrators
 from .getChatMemberCount import getChatMemberCount
 from .getChatMember import getChatMember
@@ -122,6 +123,7 @@ __all__= [
     'unpinAllChatMessages',
     'leaveChat',
     'getChat',
+    'getMe',
     'getChatAdministrators',
     'getChatMemberCount',
     'getChatMember',

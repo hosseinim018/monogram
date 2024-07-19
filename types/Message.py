@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from typing import Optional, List
 from monogram.types import *
 from monogram.methods import sendMessage
+from monogram.types.PhotoSize import PhotoSize
+# from monogram.UpdatingMessages import editMessageText
 
 
 class Invoice:
@@ -24,7 +26,9 @@ class Message:
         message_thread_id: Optional[int] = None,
         from_user: Optional[dict] = None,
         sender_chat: Optional[dict] = None,
+        link_preview_options: Optional[dict] = None,
         forward_from: Optional[dict] = None,
+        forward_origin: Optional[dict] = None,
         forward_from_chat: Optional[dict] = None,
         forward_from_message_id: Optional[int] = None,
         forward_signature: Optional[str] = None,
@@ -160,9 +164,7 @@ class Message:
         self.is_topic_message = is_topic_message
         self.is_automatic_forward = is_automatic_forward
         self.reply_to_message = reply_to_message
-        self.reply_to_message = (
-            Message(**reply_to_message) if reply_to_message else reply_to_message
-        )
+        # self.reply_to_message = (Message(**reply_to_message) if reply_to_message else reply_to_message)
         self.via_bot = User(**via_bot) if via_bot else via_bot
         self.edit_date = edit_date
         self.has_protected_content = has_protected_content
@@ -173,7 +175,7 @@ class Message:
         self.animation = Animation(**animation) if animation else animation
         self.audio = Audio(**audio) if audio else audio
         self.document = Document(**document) if document else document
-        self.photo = photo
+        self.photo = [PhotoSize(**ph) for ph in photo] if photo else photo
         self.sticker = sticker
         self.story = story
         self.video = Video(**video) if video else video
@@ -255,6 +257,12 @@ class Message:
             sendMessage(chat_id=self.chat.id, text=text, reply_markup=keyboard)
         else:
             sendMessage(chat_id=self.chat.id, text=text)
+
+    # def editMessage(self, text: str, keyboard=None):
+    #     if keyboard:
+    #         editMessageText(text=text, reply_markup=keyboard, chat_id=self.chat.id, message_id=self.message_id)
+    #     else:
+    #         editMessageText(text=text, chat_id=self.chat.id, message_id=self.message_id)
 
     def reply(self, text: str, keyboard):
         if keyboard:

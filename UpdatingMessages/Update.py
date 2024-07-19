@@ -60,16 +60,18 @@ class Update:
             chat_join_request (Optional[ChatJoinRequest]): A request to join the chat has been sent.
         """
         self.update_id = update_id
-
-        message["from_user"] = message.pop("from")
-        self.message = Message(**message)
+        if message:
+            message["from_user"] = message.pop("from")
+            self.message = Message(**message)
 
         # self.edited_message = Message(**edited_message)
         # self.channel_post = Message(**channel_post)
         # self.edited_channel_post = Message(**edited_channel_post)
         # self.inline_query = inline_query
         # self.chosen_inline_result = chosen_inline_result
-        # self.callback_query = CallbackQuery(**callback_query)
+        if callback_query:
+            callback_query["from_user"] = callback_query.pop("from")
+            self.callback_query = CallbackQuery(**callback_query)
         # self.shipping_query = shipping_query
         # self.pre_checkout_query = pre_checkout_query
         # self.poll = Poll(**poll)

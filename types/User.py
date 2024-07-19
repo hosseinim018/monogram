@@ -16,7 +16,8 @@ class User:
             added_to_attachment_menu: Optional[bool] = None,
             can_join_groups: Optional[bool] = None,
             can_read_all_group_messages: Optional[bool] = None,
-            supports_inline_queries: Optional[bool] = None
+            supports_inline_queries: Optional[bool] = None,
+            can_connect_to_business: Optional[bool] = None
     ):
         """
         Initialize the User object.
@@ -45,6 +46,7 @@ class User:
         self.can_join_groups = can_join_groups
         self.can_read_all_group_messages = can_read_all_group_messages
         self.supports_inline_queries = supports_inline_queries
+        self.can_connect_to_business = can_connect_to_business
 
         payload = {
             'id': self.id,
@@ -68,5 +70,7 @@ class User:
             payload['can_read_all_group_messages'] = self.can_read_all_group_messages
         if self.supports_inline_queries is not None:
             payload['supports_inline_queries'] = self.supports_inline_queries
+        if self.can_connect_to_business is not None:
+            payload['can_connect_to_business'] = self.can_connect_to_business
 
 
