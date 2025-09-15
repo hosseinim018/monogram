@@ -171,6 +171,6 @@ def INIsection(section: str, description: Union[str, List[str]]) -> str:
     '[Section2]\nLine 1\nLine 2\nLine 3'
     """
     if isinstance(description, list):
-        return f'[{section}]\n' + '\n'.join(description)
+        return f'{section}\n' + '\n'.join(description)
     else:
-        return f"[{section}]\n{description}"
+        return f"{section}\n{description}"
