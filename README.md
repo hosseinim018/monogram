@@ -16,11 +16,18 @@ Monogram is a powerful and flexible Django library designed to help developers b
 
 ## Installation
 
-To install Monogram, simply use pip:
+You can install Monogram using one of the following methods:
 
-```bash
-pip install monogram
-```
+1. **Using pip**:
+   ```bash
+   pip install monogram
+   ```
+
+2. **Cloning the Repository**:
+   ```bash
+   git clone https://github.com/hosseinim018/monogram.git
+   ```
+   Add Monogram to your Django project manually after cloning.
 ---
 
 ## Quickstart
