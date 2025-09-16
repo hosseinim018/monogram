@@ -79,7 +79,7 @@ class Methods(Network):
         }
 
         # Remove None values to avoid sending null parameters
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         # Serialize JSON-compatible values
         if isinstance(clean_payload.get('reply_markup'), dict):
@@ -154,7 +154,7 @@ class Methods(Network):
             payload['allowed_updates'] = json.dumps(allowed_updates)
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         files = {}
         if certificate:
@@ -222,7 +222,7 @@ class Methods(Network):
             **kwargs
         }
         
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -311,7 +311,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -360,7 +360,7 @@ class Methods(Network):
             }
 
             # Remove None values from the payload
-            clean_payload = {k: v for k, v in payload.items() if v is not None}
+            clean_payload = self._prepare_payload(payload)
 
             try:
                 return self.request(
@@ -420,7 +420,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -472,7 +472,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -521,7 +521,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -565,7 +565,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -648,7 +648,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         # Serialize JSON-compatible values if they are dictionaries/lists
         if isinstance(clean_payload.get('reply_markup'), dict):
@@ -716,7 +716,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -777,7 +777,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -826,7 +826,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -871,7 +871,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -915,7 +915,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -964,7 +964,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1010,7 +1010,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         # Serialize JSON-compatible values if they are dictionaries
         if isinstance(clean_payload.get('scope'), dict):
@@ -1079,7 +1079,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1142,7 +1142,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1191,7 +1191,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1237,7 +1237,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1301,7 +1301,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1346,7 +1346,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1391,7 +1391,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1441,7 +1441,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             response =  self.request(
@@ -1488,7 +1488,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1529,7 +1529,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1576,7 +1576,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             response =  self.request(
@@ -1614,7 +1614,7 @@ class Methods(Network):
         payload = {**kwargs} # This method typically takes no parameters, but allow kwargs for future proofing
 
         # Remove None values from the payload (likely empty for this method)
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1649,7 +1649,7 @@ class Methods(Network):
         payload = {**kwargs} # This method takes no parameters, but allow kwargs for future proofing
 
         # Remove None values from the payload (likely empty for this method)
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1696,7 +1696,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         # Serialize JSON-compatible values if they are dictionaries
         if isinstance(clean_payload.get('scope'), dict):
@@ -1740,7 +1740,7 @@ class Methods(Network):
         }
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1780,7 +1780,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1820,7 +1820,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1860,7 +1860,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1909,7 +1909,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1953,7 +1953,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -1996,7 +1996,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2051,7 +2051,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2139,7 +2139,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2186,7 +2186,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2230,7 +2230,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2294,7 +2294,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         # Serialize the permissions dictionary
         if 'permissions' in clean_payload:
@@ -2351,7 +2351,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2444,7 +2444,7 @@ class Methods(Network):
             payload['reply_markup'] = json.dumps(reply_markup)
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2559,7 +2559,7 @@ class Methods(Network):
             payload['reply_markup'] = json.dumps(reply_markup)
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2631,7 +2631,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2710,7 +2710,7 @@ class Methods(Network):
         if isinstance(reply_markup, dict):
             payload['reply_markup'] = json.dumps(reply_markup)
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2782,7 +2782,7 @@ class Methods(Network):
         if isinstance(reply_markup, dict):
             payload['reply_markup'] = json.dumps(reply_markup)
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2886,7 +2886,7 @@ class Methods(Network):
             payload['reply_markup'] = json.dumps(reply_markup)
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -2978,7 +2978,7 @@ class Methods(Network):
         if isinstance(reply_markup, dict):
             payload['reply_markup'] = json.dumps(reply_markup)
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3063,7 +3063,7 @@ class Methods(Network):
             payload['reply_parameters'] = json.dumps(reply_parameters)
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3160,7 +3160,7 @@ class Methods(Network):
             clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
 
         # # Remove None values from the payload
-        # clean_payload = {k: v for k, v in payload.items() if v is not None}
+        # clean_payload = self._prepare_payload(payload)
         
         photo = InputFile(photo)
         # print("photo is an InputFile object")
@@ -3274,7 +3274,7 @@ class Methods(Network):
         if isinstance(reply_markup, dict):
             payload['reply_markup'] = json.dumps(reply_markup)
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3367,7 +3367,7 @@ class Methods(Network):
         if isinstance(reply_markup, dict):
             payload['reply_markup'] = json.dumps(reply_markup)
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3485,7 +3485,7 @@ class Methods(Network):
         #     payload['reply_markup'] = json.dumps(reply_markup)
 
         # # Remove None values from the payload
-        # clean_payload = {k: v for k, v in payload.items() if v is not None}
+        # clean_payload = self._prepare_payload(payload)
 
         try:
             result = self.request(
@@ -3587,7 +3587,7 @@ class Methods(Network):
             payload['reply_markup'] = json.dumps(reply_markup)
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3683,7 +3683,7 @@ class Methods(Network):
             payload['reply_markup'] = json.dumps(reply_markup)
 
         # Remove None values from the payload
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3739,7 +3739,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3792,7 +3792,7 @@ class Methods(Network):
 
         # Note: If description is an empty string, we want to keep it in the payload.
         # Only remove if it's explicitly None.
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
         # If description was explicitly passed as an empty string, ensure it's in clean_payload.
         if 'description' not in clean_payload and description == "":
             clean_payload['description'] = ""
@@ -3845,7 +3845,7 @@ class Methods(Network):
         if menu_button:
             payload['menu_button'] = json.dumps(menu_button)
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3899,7 +3899,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -3959,7 +3959,7 @@ class Methods(Network):
         else:
             raise ValueError("photo must be bytes (for upload) or a string (for file_id).")
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4012,7 +4012,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4061,7 +4061,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4116,7 +4116,7 @@ class Methods(Network):
         if scope:
             payload['scope'] = json.dumps(scope) # Must be JSON-serialized
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4167,7 +4167,7 @@ class Methods(Network):
                 raise ValueError("rights must be a dictionary or None for setMyDefaultAdministratorRights.")
             payload['rights'] = json.dumps(rights) # Must be JSON-serialized
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4218,7 +4218,7 @@ class Methods(Network):
         }
 
         # Handle empty string for description explicitly, keep it if it's passed
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
         if 'description' not in clean_payload and description == "":
             clean_payload['description'] = ""
 
@@ -4271,7 +4271,7 @@ class Methods(Network):
         }
 
         # Handle empty string for name explicitly, keep it if it's passed
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
         if 'name' not in clean_payload and name == "":
             clean_payload['name'] = ""
 
@@ -4324,7 +4324,7 @@ class Methods(Network):
         }
 
         # Handle empty string for short_description explicitly, keep it if it's passed
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
         if 'short_description' not in clean_payload and short_description == "":
             clean_payload['short_description'] = ""
 
@@ -4380,7 +4380,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4429,7 +4429,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4473,7 +4473,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4518,7 +4518,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4567,7 +4567,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4611,7 +4611,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4661,7 +4661,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4708,7 +4708,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         try:
             return self.request(
@@ -4767,7 +4767,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         if isinstance(clean_payload.get('reply_markup'), dict):
             clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
@@ -4842,7 +4842,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         if isinstance(clean_payload.get('reply_markup'), dict):
             clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
@@ -4900,7 +4900,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         # Telegram API expects 'media' to be a JSON string
         if isinstance(clean_payload.get('media'), dict):
@@ -4963,7 +4963,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         if isinstance(clean_payload.get('reply_markup'), dict):
             clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
@@ -5030,7 +5030,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         if isinstance(clean_payload.get('reply_markup'), dict):
             clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
@@ -5087,7 +5087,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         if isinstance(clean_payload.get('reply_markup'), dict):
             clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
@@ -5139,7 +5139,7 @@ class Methods(Network):
             **kwargs
         }
 
-        clean_payload = {k: v for k, v in payload.items() if v is not None}
+        clean_payload = self._prepare_payload(payload)
 
         if isinstance(clean_payload.get('reply_markup'), dict):
             clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
@@ -5152,4 +5152,76 @@ class Methods(Network):
             )
         except requests.exceptions.RequestException as e:
             logging.error(f"Failed to stop poll in chat {chat_id}, message {message_id}. Error: {e}")
+            raise
+
+    def answerInlineQuery(
+        self,
+        inline_query_id: str,
+        results: list[Dict[str, Any]],
+        cache_time: Optional[int] = None,
+        is_personal: Optional[bool] = None,
+        next_offset: Optional[str] = None,
+        button: Optional[Dict[str, Any]] = None,
+        return_response: bool = True,
+        **kwargs: Any
+    ) -> Optional[requests.Response]:
+        """
+        Use this method to send answers to an inline query. On success, True is returned.
+        No more than 50 results per query are allowed.
+
+        Args:
+            inline_query_id: Unique identifier for the answered query.
+            results: A list of InlineQueryResult objects as dictionaries.
+            cache_time: The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.
+            is_personal: Pass True if results may be cached on the server side only for the user that sent the query.
+            next_offset: Offset for pagination. Empty string if no more results. Max length 64 bytes.
+            button: A JSON-serialized object describing a button to be shown above inline query results.
+            return_response: Whether to return the raw response object.
+            **kwargs: Additional API parameters.
+
+        Returns:
+            requests.Response if return_response=True, None otherwise
+
+        Raises:
+            ValueError: If required parameters are missing or invalid.
+            requests.exceptions.RequestException: For request-related errors.
+        """
+        if not inline_query_id:
+            raise ValueError("inline_query_id is required for answerInlineQuery.")
+        if not isinstance(results, list) or len(results) == 0:
+            raise ValueError("results must be a non-empty list for answerInlineQuery.")
+        if len(results) > 50:
+            raise ValueError("No more than 50 results are allowed for answerInlineQuery.")
+        if next_offset is not None and not isinstance(next_offset, str):
+            raise ValueError("next_offset must be a string if provided for answerInlineQuery.")
+        if next_offset is not None and len(next_offset.encode('utf-8')) > 64:
+            raise ValueError("next_offset length can't exceed 64 bytes for answerInlineQuery.")
+
+        payload = {
+            'inline_query_id': inline_query_id,
+            'results': results,
+            'cache_time': cache_time,
+            'is_personal': is_personal,
+            'next_offset': next_offset,
+            'button': button,
+            **kwargs
+        }
+
+        # Remove None values
+        clean_payload = self._prepare_payload(payload)
+
+        # Serialize JSON-compatible fields
+        # if isinstance(clean_payload.get('results'), list):
+        #     clean_payload['results'] = json.dumps(clean_payload['results'])
+        # if isinstance(clean_payload.get('button'), dict):
+        #     clean_payload['button'] = json.dumps(clean_payload['button'])
+
+        try:
+            return self.request(
+                method="answerInlineQuery",
+                payload=clean_payload,
+                return_response=return_response
+            )
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Failed to answer inline query {inline_query_id}. Error: {e}")
             raise

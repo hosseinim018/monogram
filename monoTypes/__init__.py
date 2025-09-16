@@ -105,6 +105,31 @@ from .ChatShared import ChatShared
 from .Video import Video
 from .VideoNote import VideoNote
 from .Contact import Contact
+from .InlineQueryResultArticle import InlineQueryResultArticle
+from .InputTextMessageContent import InputTextMessageContent
+from .InlineQueryResultDocument import InlineQueryResultDocument
+from .InlineQueryResultLocation import InlineQueryResultLocation
+from .InlineQueryResultVenue import InlineQueryResultVenue
+from .InlineQueryResultCachedGif import InlineQueryResultCachedGif
+from .InlineQueryResultGame import InlineQueryResultGame
+from .InlineQueryResultContact import InlineQueryResultContact
+from .InlineQueryResultPhoto import InlineQueryResultPhoto
+from .InlineQueryResultCachedPhoto import InlineQueryResultCachedPhoto
+from .InlineQueryResultCachedMpeg4Gif import InlineQueryResultCachedMpeg4Gif
+from .InlineQueryResultCachedSticker import InlineQueryResultCachedSticker
+from .InlineQueryResultCachedVideo import InlineQueryResultCachedVideo
+from .InlineQueryResultCachedDocument import InlineQueryResultCachedDocument
+from .InlineQueryResultCachedVoice import InlineQueryResultCachedVoice
+from .InlineQueryResultCachedAudio import InlineQueryResultCachedAudio
+from .InlineQueryResult import InlineQueryResult
+from .InputLocationMessageContent import InputLocationMessageContent
+from .InputVenueMessageContent import InputVenueMessageContent
+from .InputContactMessageContent import InputContactMessageContent
+from .InputInvoiceMessageContent import InputInvoiceMessageContent
+from .PreparedInlineMessage import PreparedInlineMessage
+from .answerWebAppQuery import answerWebAppQuery
+from .SentWebAppMessage import SentWebAppMessage
+
 from monogram.monoTypes import VideoChatStarted, GeneralForumTopicHidden, GeneralForumTopicUnhidden, ForumTopicReopened, \
     ForumTopicClosed, ForumTopicCreated, Story
 from .baseType import BaseType
@@ -137,7 +162,6 @@ __all__ = [
     "ReactionType",
     # Inline related
     "InlineQuery",
-    "ChosenInlineResult",
     # Payment and Shipping
     "ShippingQuery",
     "PreCheckoutQuery",
@@ -234,4 +258,33 @@ __all__ = [
     "InputFile",
     "ChatShared",
     "CallbackGame",
+    "InlineQueryResultArticle",
+    "InputTextMessageContent",
+    "InlineQueryResultAudio",
+    "InlineQueryResultVideo",
+    "InlineQueryResultVoice",
+    "InlineQueryResultDocument",
+    "InlineQueryResultLocation",
+    "InlineQueryResultVenue",
+    "InlineQueryResultCachedGif",
+    "InlineQueryResultGame",
+    "InlineQueryResultContact",
+    "InlineQueryResultPhoto",
+    "InlineQueryResultCachedPhoto",
+    "InlineQueryResultCachedMpeg4Gif",
+    "InlineQueryResultCachedSticker",
+    "InlineQueryResultCachedVideo",
+    "InlineQueryResultCachedDocument",
+    "InlineQueryResultCachedVoice",
+    "InlineQueryResultCachedAudio",
+    "InlineQueryResult",
+    'InputLocationMessageContent',
+    'InputVenueMessageContent',
+    'InputContactMessageContent',
+    'InputInvoiceMessageContent',
+    'ChosenInlineResult',
+    'PreparedInlineMessage',
+    'answerWebAppQuery',
+    'SentWebAppMessage',
 ]
+
