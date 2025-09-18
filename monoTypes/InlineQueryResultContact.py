@@ -22,8 +22,6 @@ class InlineQueryResultContact(BaseType):
         self.last_name = last_name
         self.vcard = vcard
 
-    def validate(self):
-        """Validates the required fields."""
         if not self.id:
             raise ValueError("id is required")
         if not self.phone_number:

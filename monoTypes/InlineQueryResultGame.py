@@ -15,9 +15,7 @@ class InlineQueryResultGame(BaseType):
         self.type = 'game'
         self.id = id
         self.game_short_name = game_short_name
-
-    def validate(self):
-        """Validates the required fields."""
+        
         if not self.id:
             raise ValueError("id is required")
         if not self.game_short_name:
