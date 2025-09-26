@@ -176,6 +176,8 @@ class Network:
                 payload.pop('self')
             if 'cls' in payload:
                 payload.pop('cls')
+            if 'kwargs' in payload:
+                payload.pop('kwargs')
             # Apply text formatting if 'text' or 'caption' keys exist
             if 'text' in payload and payload['text'] is not None:
                 payload['text'] = format_text(payload['text'])
