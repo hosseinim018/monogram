@@ -2580,10 +2580,11 @@ class Methods(Network):
             logging.error(f"Failed to send audio to chat {chat_id}. Error: {e}")
             raise
         finally:
-            # Close file handles if they were opened as bytes
-            for f_key in ['audio', 'thumbnail']:
-                if f_key in files and hasattr(files[f_key][1], 'close'):
-                    files[f_key][1].close()
+            # Close any opened file handles
+            if 'files' in locals() and files:
+                for f_key in ['audio', 'thumbnail']:
+                    if f_key in files and hasattr(files[f_key], 'close'):
+                        files[f_key].close()
 
 
  
