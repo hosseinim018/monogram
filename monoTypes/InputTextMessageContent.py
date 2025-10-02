@@ -85,12 +85,12 @@ class InputTextMessageContent(BaseType):
         #     if not hasattr(self, key):
         #         setattr(self, key, value)
 
-    def __str__(self) -> str:
-        """
-        Get a string representation of the input text message content.
+    # def __str__(self) -> str:
+    #     """
+    #     Get a string representation of the input text message content.
 
-        Returns:
-            str: A preview of the message text (truncated if too long)
-        """
-        preview = self.message_text[:50] + ('...' if len(self.message_text) > 50 else '')
-        return f"Text Message: {preview}"
+    #     Returns:
+    #         str: A preview of the message text (truncated if too long)
+    #     """
+    #     preview = self.message_text[:50] + ('...' if len(self.message_text) > 50 else '')
+    #     return f"Text Message: {preview}"

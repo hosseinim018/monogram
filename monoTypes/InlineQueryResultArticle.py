@@ -25,6 +25,8 @@ def _prepare_payload(raw_payload):
             payload.pop('cls')
         if 'kwargs' in payload:
             payload.pop('kwargs')
+        if 'args' in payload:
+            payload.pop('args')
         # Apply text formatting if 'text' or 'caption' keys exist
         if 'text' in payload and payload['text'] is not None:
             payload['text'] = format_text(payload['text'])
@@ -50,8 +52,9 @@ class InlineQueryResultArticle(BaseType):
         thumbnail_url: Optional[str] = None,
         thumbnail_width: Optional[int] = None,
         thumbnail_height: Optional[int] = None,
+        *args: Any,
         **kwargs: Any
-    ):
+    ) -> dict:
         """
         Initialize an InlineQueryResultArticle object that represents a link to an article or web page.
 
@@ -70,22 +73,17 @@ class InlineQueryResultArticle(BaseType):
         Raises:
             ValueError: If id length is invalid
         """
-        payload = _prepare_payload(raw_payload=locals().copy())
-        from pprint import pprint
-        pprint(payload)
-        return payload
-        # super().__init__(**kwargs)
         
         # # Validate id length (1-64 bytes)
         # if not (1 <= len(id.encode('utf-8')) <= 64):
         #     raise ValueError("id must be between 1 and 64 bytes")
 
-        # # Required fields
-        # cls.type = 'article'  # Type of the result, must be article
+        # Required fields
+        # cls.type = "article"  # Type of the result, must be article
         # cls.id = id
         # cls.title = title
         
-        # # Handle input message content
+        # # # Handle input message content
         # if isinstance(input_message_content, dict):
         #     cls.input_message_content = InputTextMessageContent(**input_message_content)
         # elif isinstance(input_message_content, InputTextMessageContent):
@@ -107,14 +105,18 @@ class InlineQueryResultArticle(BaseType):
         #     if not hasattr(cls, key):
         #         setattr(cls, key, value)
 
-    def __str__(cls) -> str:
-        """
-        Get a string representation of the inline query result article.
+        payload = _prepare_payload(raw_payload=locals().copy())
+        payload['type']= 'article'
+        return payload
+    
+    # def __str__(cls) -> str:
+    #     """
+    #     Get a string representation of the inline query result article.
 
-        Returns:
-            str: A string containing the title and description (if available)
-        """
-        result = f"Article: {cls.title}"
-        if cls.description:
-            result += f" - {cls.description[:50]}..."
-        return result
+    #     Returns:
+    #         str: A string containing the title and description (if available)
+    #     """
+    #     result = f"Article: {cls.title}"
+    #     if cls.description:
+    #         result += f" - {cls.description[:50]}..."
+    #     return result
