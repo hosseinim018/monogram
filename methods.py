@@ -2870,33 +2870,40 @@ class Methods(Network):
             **kwargs
         }
 
-        files = {}
-        if isinstance(document, bytes):
-            files['document'] = ('document.bin', document, 'application/octet-stream') # Generic binary
-        elif isinstance(document, str) and (document.startswith('http://') or document.startswith('https://')):
-            payload['document'] = document
-        else:
-            payload['document'] = document
+        # files = {}
+        # if isinstance(document, bytes):
+        #     files['document'] = ('document.bin', document, 'application/octet-stream') # Generic binary
+        # elif isinstance(document, str) and (document.startswith('http://') or document.startswith('https://')):
+        #     payload['document'] = document
+        # else:
+        #     payload['document'] = document
 
-        if thumbnail:
-            if isinstance(thumbnail, bytes):
-                files['thumbnail'] = ('thumbnail.jpg', thumbnail, 'image/jpeg')
-            elif isinstance(thumbnail, str) and (thumbnail.startswith('http://') or thumbnail.startswith('https://')):
-                payload['thumbnail'] = thumbnail
-            else:
-                payload['thumbnail'] = thumbnail
+        # if thumbnail:
+        #     if isinstance(thumbnail, bytes):
+        #         files['thumbnail'] = ('thumbnail.jpg', thumbnail, 'image/jpeg')
+        #     elif isinstance(thumbnail, str) and (thumbnail.startswith('http://') or thumbnail.startswith('https://')):
+        #         payload['thumbnail'] = thumbnail
+        #     else:
+        #         payload['thumbnail'] = thumbnail
 
-        # Serialize JSON-compatible values
-        if isinstance(caption_entities, list):
-            payload['caption_entities'] = json.dumps(caption_entities)
-        if isinstance(reply_parameters, dict):
-            payload['reply_parameters'] = json.dumps(reply_parameters)
-        if isinstance(reply_markup, dict):
-            payload['reply_markup'] = json.dumps(reply_markup)
+        # # Serialize JSON-compatible values
+        # if isinstance(caption_entities, list):
+        #     payload['caption_entities'] = json.dumps(caption_entities)
+        # if isinstance(reply_parameters, dict):
+        #     payload['reply_parameters'] = json.dumps(reply_parameters)
+        # if isinstance(reply_markup, dict):
+        #     payload['reply_markup'] = json.dumps(reply_markup)
 
+        # # Remove None values from the payload
+        # clean_payload = self._prepare_payload(payload)
         # Remove None values from the payload
         clean_payload = self._prepare_payload(payload)
+        if isinstance(clean_payload.get('reply_markup'), dict):
+            clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
 
+        audio = InputFile(audio)
+        file = open(audio.file_path, 'rb')
+        files = {"document": document}
         try:
             return self.request(
                 method="sendDocument",
