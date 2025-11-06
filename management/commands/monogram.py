@@ -45,8 +45,8 @@ class Command(BaseCommand):
 
         # Display bot list
         self.stdout.write('\nAvailable bots:')
-        for bot in bots:
-            self.stdout.write(f'[{bot.id}] {bot.name}')
+        for i, bot in enumerate(bots, 1):
+            self.stdout.write(f'[{i}] {bot.name}')
 
         # Interactive mode
         self.stdout.write('\nEnter bot number to see options (or "c" to cancel): ')
@@ -57,14 +57,13 @@ class Command(BaseCommand):
                 return
                 
             try:
-                bot_id = int(choice)
-                bot = bots.filter(id=bot_id).first()
-                
-                if not bot:
+                bot_index = int(choice)
+                if 1 <= bot_index <= len(bots):
+                    bot = bots[bot_index - 1]
+                    self.show_bot_options(bot)
+                else:
                     self.stdout.write(self.style.ERROR('Invalid bot number'))
                     return
-                    
-                self.show_bot_options(bot)
                     
             except ValueError:
                 self.stdout.write(self.style.ERROR('Please enter a valid number'))
@@ -79,11 +78,12 @@ class Command(BaseCommand):
             'set webhook',
             'delete webhook',
             'webhook info',
+            'edit bot',
             'delete bot'
         ]
         
         self.stdout.write('\nAvailable options:')
-        for i, option in enumerate(options):
+        for i, option in enumerate(options, 1):
             self.stdout.write(f'[{i}] {option}')
         self.stdout.write('enter "c" to cancel')
         
@@ -95,19 +95,21 @@ class Command(BaseCommand):
                 
             try:
                 option = int(choice)
-                if option < 0 or option >= len(options):
+                if option < 1 or option > len(options):
                     self.stdout.write(self.style.ERROR('Invalid option number'))
                     return
                     
-                if option == 0:
+                if option == 1:
                     self.show_bot_information(bot)
-                elif option == 1:
-                    self.set_webhook(bot)
                 elif option == 2:
-                    self.delete_webhook(bot)
+                    self.set_webhook(bot)
                 elif option == 3:
-                    self.show_webhook_info(bot)
+                    self.delete_webhook(bot)
                 elif option == 4:
+                    self.show_webhook_info(bot)
+                elif option == 5:
+                    self.edit_bot(bot)
+                elif option == 6:
                     self._confirm_and_delete_bot(bot)
                     
             except ValueError:
@@ -435,53 +437,60 @@ You will need to provide:
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"\nFailed to create bot: {str(e)}"))
 
-    def _validate_name(self, value):
+    def _validate_name(self, value, bot_instance=None):
         """Validate bot name"""
         if not value:
             raise ValueError("Bot name cannot be empty")
-        if BotManager.objects.filter(name=value).exists():
+        query = BotManager.objects.filter(name=value)
+        if bot_instance:
+            query = query.exclude(pk=bot_instance.pk)
+        if query.exists():
             raise ValueError("This bot name already exists")
         return value
 
-    def _validate_username(self, value):
+    def _validate_username(self, value, bot_instance=None):
         """Validate bot username"""
         if not value:
             raise ValueError("Bot username cannot be empty")
-        if BotManager.objects.filter(username=value).exists():
+        query = BotManager.objects.filter(username=value)
+        if bot_instance:
+            query = query.exclude(pk=bot_instance.pk)
+        if query.exists():
             raise ValueError("This bot username already exists")
         return value
 
-    def _validate_owner(self, value):
+    def _validate_owner(self, value, bot_instance=None):
         """Validate owner ID"""
         if not value.isdigit():
             raise ValueError("Owner ID must be a number")
         return int(value)
 
-    def _validate_token(self, value):
+    def _validate_token(self, value, bot_instance=None):
         """Validate bot token"""
         if not value:
             raise ValueError("Bot token cannot be empty")
         return value
 
-    def _validate_secret_token(self, value):
+    def _validate_secret_token(self, value, bot_instance=None):
         """Validate secret token"""
         return value if value else None
 
-    def _validate_object(self, value):
+    def _validate_object(self, value, bot_instance=None):
         """Validate bot class path"""
         if not value:
             raise ValueError("Bot class path cannot be empty")
         return value
 
-    def _validate_proxy(self, value):
+    def _validate_proxy(self, value, bot_instance=None):
         """Validate proxy setting"""
         return value.lower() == 'y'
 
-    def _validate_proxy_url(self, value):
+    def _validate_proxy_url(self, value, bot_instance=None):
         """Validate proxy URL"""
-        if not value:
-            raise ValueError("Proxy URL cannot be empty when proxy is enabled")
-        return value
+        # This validation is only for direct input, proxy URL can be empty if proxy is false
+        if value:
+            return value
+        return None
 
     def delete_bot(self, botname):
         """Delete a bot by name with confirmation"""
@@ -521,3 +530,75 @@ You will need to provide:
             self.stdout.write('\nOperation cancelled by user')
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Error during deletion: {str(e)}'))
+
+    def edit_bot(self, bot):
+        """Interactive bot editing process"""
+        self.stdout.write(self.style.NOTICE(f"\nEditing bot: {bot.name}"))
+        
+        while True:
+            fields = [
+                ('Name', 'name', bot.name, self._validate_name),
+                ('Username', 'username', bot.username, self._validate_username),
+                ('Owner', 'owner', bot.owner, self._validate_owner),
+                ('Token', 'token', bot.token, self._validate_token),
+                ('Secret Token', 'secret_token', bot.secret_token, self._validate_secret_token),
+                ('Bot Class Path', 'object', bot.object, self._validate_object),
+                ('Proxy', 'proxy', bot.proxy, self._validate_proxy),
+                ('Proxy URL', 'proxy_url', bot.proxy_url, self._validate_proxy_url),
+            ]
+
+            self.stdout.write("\nSelect a field to edit:")
+            for i, (label, _, value, _) in enumerate(fields, 1):
+                self.stdout.write(f"[{i}] {label}: {value}")
+            
+            self.stdout.write("\nEnter field number, 's' to save and exit, or 'c' to cancel: ")
+            choice = input().strip().lower()
+
+            if choice == 'c':
+                self.stdout.write(self.style.NOTICE("Editing cancelled."))
+                return
+            if choice == 's':
+                try:
+                    bot.full_clean()
+                    bot.save()
+                    self.stdout.write(self.style.SUCCESS(f"Bot '{bot.name}' updated successfully!"))
+                except Exception as e:
+                    self.stdout.write(self.style.ERROR(f"Failed to save bot: {e}"))
+                return
+
+            try:
+                field_num = int(choice)
+                if 1 <= field_num <= len(fields):
+                    label, key, _, validator = fields[field_num - 1]
+                    
+                    prompt = f"Enter new {label}: "
+                    if key == 'proxy':
+                        prompt = "Use proxy? (y/n): "
+                    
+                    new_value_str = input(prompt).strip()
+
+                    try:
+                        # For proxy, the validator returns a boolean directly
+                        if key == 'proxy':
+                            new_value = validator(new_value_str)
+                            setattr(bot, key, new_value)
+                            if not new_value: # If proxy is disabled, clear proxy_url
+                                setattr(bot, 'proxy_url', None)
+                        # For other fields, validator returns the cleaned value
+                        else:
+                            # Pass bot instance to validator for context
+                            new_value = validator(new_value_str, bot_instance=bot)
+                            setattr(bot, key, new_value)
+                        
+                        self.stdout.write(self.style.SUCCESS(f"{label} updated."))
+
+                    except ValueError as e:
+                        self.stdout.write(self.style.ERROR(str(e)))
+
+                else:
+                    self.stdout.write(self.style.ERROR("Invalid field number."))
+            except ValueError:
+                self.stdout.write(self.style.ERROR("Please enter a valid number, 's', or 'c'."))
+            except KeyboardInterrupt:
+                self.stdout.write("\nOperation cancelled by user.")
+                return
