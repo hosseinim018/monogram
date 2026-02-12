@@ -12,7 +12,6 @@
 
 ## ✨ What is Monogram?
 
-<<<<<<< HEAD
 Monogram is a **Django-based Telegram Bot library** that uses **webhooks** to receive updates. It follows a *Typography* approach: method names, parameters, and types align with the [official Telegram Bot API](https://core.telegram.org/bots/api), so you work with familiar concepts and a clean, predictable surface. Every bot is a **Django model**—stored in the DB, manageable via admin or custom views, and ready to scale within the Django ecosystem.
 
 ---
@@ -57,21 +56,6 @@ Under the hood, Monogram is built on a simple inheritance chain that gives every
 ```bash
 pip install monogram
 ```
-=======
-You can install Monogram using one of the following methods:
-
-1. **Using pip**:
-   ```bash
-   pip install monogram
-   ```
-
-2. **Cloning the Repository**:
-   ```bash
-   git clone https://github.com/hosseinim018/monogram.git
-   ```
-   Add Monogram to your Django project manually after cloning.
----
->>>>>>> 8f5ba1edfc9494d5db328225218355a0dc1768f0
 
 ### 2. Configure Django
 
