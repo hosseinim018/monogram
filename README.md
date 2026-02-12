@@ -89,7 +89,7 @@ urlpatterns = [
 python manage.py migrate
 ```
 
-Open `https://your-domain.com/monogram/` in the browser, add your bot (name + token), then set the webhook for that bot. In the bot’s settings, set **Object** to the dotted path of your bot class (e.g. `myapp.bot.MyBot`).
+Open `https://github.com/hosseinim018/monogram/` in the browser, add your bot (name + token), then set the webhook for that bot. In the bot’s settings, set **Object** to the dotted path of your bot class (e.g. `myapp.bot.MyBot`).
 
 ### 4. Define your bot logic class
 
@@ -146,11 +146,11 @@ Use a public URL (or a tunnel like ngrok) for webhooks so Telegram can reach you
 
 For architecture, type system, webhook flow, and contributing guidelines, see the **GitHub Wiki**:
 
-- [**Home**](https://github.com/YOUR_USERNAME/monogram/wiki/Home) — Overview and Typography philosophy  
-- [**Architecture**](https://github.com/YOUR_USERNAME/monogram/wiki/Architecture) — Network → Methods → BotManager and Mermaid diagram  
-- [**Type system**](https://github.com/YOUR_USERNAME/monogram/wiki/Type-System) — `monoTypes` and `BaseType`  
-- [**Webhook handling**](https://github.com/YOUR_USERNAME/monogram/wiki/Webhook-Handling) — How updates are routed and converted to typed `Update`  
-- [**Contributing**](https://github.com/YOUR_USERNAME/monogram/wiki/Contributing) — How to add types and methods and keep the structure consistent  
+- [**Home**](https://github.com/hosseinim018/monogram/wiki/Home) — Overview and Typography philosophy  
+- [**Architecture**](https://github.com/hosseinim018/monogram/wiki/Architecture) — Network → Methods → BotManager and Mermaid diagram  
+- [**Type system**](https://github.com/hosseinim018/monogram/wiki/Type-System) — `monoTypes` and `BaseType`  
+- [**Webhook handling**](https://github.com/hosseinim018/monogram/wiki/Webhook-Handling) — How updates are routed and converted to typed `Update`  
+- [**Contributing**](https://github.com/hosseinim018/monogram/wiki/Contributing) — How to add types and methods and keep the structure consistent  
 
 Replace `YOUR_USERNAME` with your GitHub username or org.
 
@@ -165,7 +165,7 @@ Contributions are welcome. To keep the project consistent:
 - **Methods**: New API methods go in `methods.py` so they are available on every `BotManager` instance.
 - **Django**: Preserve the webhook flow and the `BotManager` model contract.
 
-See the [Contributing wiki page](https://github.com/YOUR_USERNAME/monogram/wiki/Contributing) for the full guide (adding types, adding methods, PR checklist).
+See the [Contributing wiki page](https://github.com/hosseinim018/monogram/wiki/Contributing) for the full guide (adding types, adding methods, PR checklist).
 
 1. Fork the repo  
 2. Create a branch for your feature or fix  
