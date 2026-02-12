@@ -1,0 +1,76 @@
+# Monogram — System context for AI agents
+
+You are helping develop bots or code that uses **Monogram**, a Django-based Telegram Bot framework. Use this file as the source of truth for architecture and conventions.
+
+---
+
+## What Monogram is
+
+- **Django app** that receives Telegram updates via **webhooks** (no long polling).
+- **Typography-based**: method names, parameters, and types mirror the [official Telegram Bot API](https://core.telegram.org/bots/api).
+- **Core idea**: Every bot is a **Django model instance** that is **also** the Telegram API client. There is no separate "client" object.
+
+---
+
+## Inheritance chain (critical)
+
+```
+Network (network.py)  →  Methods (methods.py)  →  BotManager (models.py)
+```
+
+- **Network**: HTTP layer. Handles `request(method, payload, files)`, builds API URL from token/endpoint, manages session and proxies.
+- **Methods**: Subclasses Network. Implements every Telegram API method (e.g. `sendMessage`, `getMe`, `setWebhook`, `sendPhoto`). Each method calls `self.request(...)` and may return typed objects from `monogram.monoTypes`.
+- **BotManager**: Subclasses **both** `Methods` and `django.db.models.Model`. So a `BotManager` instance is:
+  - A **Django model**: has `name`, `token`, `secret_token`, `endpoint`, `webhook_active`, `object`, etc.; can be saved, queried with `BotManager.objects.get(name='...')`, used in admin/views.
+  - A **Telegram client**: has all Methods (and thus Network) behavior. You call `bot.sendMessage(...)`, `bot.getMe()`, `bot.setWebhook(...)` **on the same object**.
+
+**Rule for agents**: When you see `self.bot` or a variable that is a `BotManager` instance, treat it as **both** a Django model and the Telegram API client. Do not create or assume a separate "Telegram client"; use `self.bot.sendMessage(...)` and other methods directly on that instance.
+
+---
+
+## Typography philosophy
+
+- **Methods**: Names and parameters follow the Telegram Bot API (e.g. `sendMessage(chat_id, text, parse_mode, ...)`). Adding a method = add it to `methods.py` on the `Methods` class; it then exists on every `BotManager` instance.
+- **Types**: All API types live under `monogram.monoTypes` and inherit from `BaseType`. Types mirror the official docs (e.g. `Message`, `User`, `Chat`, `Update`, `CallbackQuery`). Use these types in handler code; do not rely on raw dicts for known structures.
+- **Consistency**: When suggesting method calls or new types, align with the [Telegram Bot API](https://core.telegram.org/bots/api) documentation.
+
+---
+
+## monoTypes (type system)
+
+- **Location**: `monogram/monoTypes/`. Exported via `from monogram.monoTypes import Update, Message, User, Chat, ...`
+- **BaseType** (`monoTypes/baseType.py`): Base for all types. Accepts `**kwargs` in `__init__`; stores them (with `from` → `from_user`). Supports attribute access and dict-like access (`obj['key']`).
+- **Update**: Root type for an incoming webhook payload. Has `update_id` and exactly one of: `message`, `edited_message`, `channel_post`, `callback_query`, `inline_query`, `poll`, `chat_member`, etc. Each is a typed object (e.g. `update.message` is a `Message` when present).
+- **Message**: Has `message_id`, `date`, `chat`, `from_user`, `text`, `reply_to_message`, and many optional fields. `chat` is a Chat-like object with `id`, `type`, etc.
+- **Handler pattern**: In bot logic, check which part of the update is present (e.g. `if 'message' in self.update:` or `if hasattr(self.update, 'message') and self.update.message:`), then use `self.update.message`, `self.update.callback_query`, etc. as typed objects. Use `self.bot.sendMessage(chat_id=..., text=...)` to reply—`self.bot` is the BotManager instance (Django model + Telegram client).
+
+---
+
+## Bot logic class (handler)
+
+- The **webhook** (`webhook.py`) receives POSTs, loads the bot by URL path (`botname`), parses JSON into `Update(bot=bot, **update_data)`, then calls `_process_update(bot, update)`.
+- `_process_update` loads the user's bot class from `bot.object` (dotted path, e.g. `myapp.bot.MyBot`), then instantiates: `BotClass(bot, update)`. So the constructor receives:
+  - **bot**: A `BotManager` instance (Django model + Telegram Methods client).
+  - **update**: A typed `Update` from `monogram.monoTypes`.
+- **Convention**: The bot logic class typically stores `self.bot = bot` and `self.update = update`, then runs handling (e.g. in `__init__` or in a `handle_update()` method called from `__init__`). All Telegram API calls go through `self.bot` (e.g. `self.bot.sendMessage(...)`).
+- **Critical**: `self.bot` is the same object as the row in the database. It has `.name`, `.token`, `.save()`, `.objects`, etc., and also `.sendMessage()`, `.getMe()`, and every other Telegram method. Do not suggest a separate client or wrapper.
+
+---
+
+## Code patterns to enforce
+
+1. **Sending a message**: `self.bot.sendMessage(chat_id=chat_id, text=text)` — `self.bot` is the BotManager instance.
+2. **Reading the update**: Use `self.update.message`, `self.update.callback_query`, etc.; check presence with `'message' in self.update` or equivalent before accessing.
+3. **Getting chat/user ids**: e.g. `self.update.message.chat.id`, `self.update.message.from_user.id` (typed attributes).
+4. **Loading a bot elsewhere** (e.g. in a management command or view): `bot = BotManager.objects.get(name='MyBot')` then `bot.sendMessage(...)` — same object, no extra client.
+5. **Adding new API methods**: Add them to `methods.py` on the `Methods` class; they are then available on every `BotManager` instance.
+6. **Adding new types**: Create a class in `monoTypes/` that inherits from `BaseType`, mirror the Telegram API type, and export it in `monoTypes/__init__.py`.
+
+---
+
+## Summary for agents
+
+- **BotManager** = Django model + Telegram Methods client in one object.
+- **self.bot** in handler code = that same object; use it for both DB/model operations and for all Telegram API calls.
+- **Typography**: Follow the official Telegram Bot API for names and shapes; types live in `monoTypes` and inherit from `BaseType`.
+- **Handler**: Class receives `(bot, update)`; use `self.bot.sendMessage(...)` and typed `self.update.message` / `self.update.callback_query` / etc. when writing bot logic.

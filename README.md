@@ -142,6 +142,26 @@ Use a public URL (or a tunnel like ngrok) for webhooks so Telegram can reach you
 
 ---
 
+## 🤖 Developing with AI
+
+Monogram is **AI-optimized** so that AI coding assistants can write correct bot logic with minimal context.
+
+A **`.cursorrules`** file in the project root acts as a system prompt for Cursor (and other AI agents). It describes:
+
+- The **inheritance chain** (Network → Methods → BotManager)
+- The **Typography** philosophy and how it maps to the Telegram Bot API
+- How **monoTypes** work (`Update`, `Message`, `User`, `Chat`, etc.) and how to use them in handlers
+- The central rule: **`self.bot` is both a Django model and the Telegram API client**—there is no separate client object
+
+**How to use it:**
+
+- In **Cursor**: Open this repo (or point the agent at the Monogram codebase). The `.cursorrules` file is read automatically; the agent will understand how to write handler classes, use `self.bot.sendMessage()` and other methods, and follow the Typography system.
+- With **other AI agents**: Share the project root or the `.cursorrules` file so the agent has the same context. You can say: *"We use Monogram; read .cursorrules for architecture. In handlers, `self.bot` is the BotManager instance—Django model and Telegram client in one."*
+
+With this, the agent can generate handler code that receives `(bot, update)`, uses typed `update.message` / `update.callback_query`, and calls `self.bot.sendMessage()` and the rest of the API correctly—without inventing a separate client or wrong patterns.
+
+---
+
 ## 📚 Wiki & Deep Dives
 
 For architecture, type system, webhook flow, and contributing guidelines, see the **GitHub Wiki**:
@@ -151,8 +171,6 @@ For architecture, type system, webhook flow, and contributing guidelines, see th
 - [**Type system**](https://github.com/hosseinim018/monogram/wiki/Type-System) — `monoTypes` and `BaseType`  
 - [**Webhook handling**](https://github.com/hosseinim018/monogram/wiki/Webhook-Handling) — How updates are routed and converted to typed `Update`  
 - [**Contributing**](https://github.com/hosseinim018/monogram/wiki/Contributing) — How to add types and methods and keep the structure consistent  
-
-Replace `YOUR_USERNAME` with your GitHub username or org.
 
 ---
 
