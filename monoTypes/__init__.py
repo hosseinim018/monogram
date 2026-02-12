@@ -126,6 +126,7 @@ from .InputLocationMessageContent import InputLocationMessageContent
 from .InputVenueMessageContent import InputVenueMessageContent
 from .InputContactMessageContent import InputContactMessageContent
 from .InputInvoiceMessageContent import InputInvoiceMessageContent
+from .InlineQueryResultAudio import InlineQueryResultAudio
 from .PreparedInlineMessage import PreparedInlineMessage
 from .answerWebAppQuery import answerWebAppQuery
 from .SentWebAppMessage import SentWebAppMessage

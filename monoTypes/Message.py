@@ -191,7 +191,6 @@ class Message(BaseType):
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-
     def answer(self, text: str, keyboard: Optional[Union[InlineKeyboardMarkup, Dict]] = None, 
               parse_mode: Optional[str] = 'html', disable_web_page_preview: bool = False) -> Optional[dict]:
         """
@@ -263,3 +262,22 @@ class Message(BaseType):
             disable_web_page_preview=disable_web_page_preview,
             disable_notification=disable_notification
         )
+
+    def deleteMessage(self):
+        """
+        Deletes the current message from the chat.
+
+        This method calls the bot's `deleteMessage` function, passing the chat ID and message ID
+        of the current message instance.
+
+        Returns:
+            The result of the bot's `deleteMessage` method, which typically indicates whether
+            the deletion was successful.
+
+        Raises:
+            Any exceptions raised by the underlying bot's `deleteMessage` method.
+        """
+        return self.bot.deleteMessage(
+            chat_id=self.chat.id,
+            message_id=self.message_id,
+            )

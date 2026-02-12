@@ -2,14 +2,47 @@ from typing import Optional, Dict, Any, Union
 from .baseType import BaseType
 from .InputTextMessageContent import InputTextMessageContent
 from .InlineKeyboardMarkup import InlineKeyboardMarkup
+from monogram.text import format_text
+
+def _prepare_payload(raw_payload):
+    """
+    Prepares a payload dictionary for Telegram API requests.
+    Removes None values and formats text/caption fields.
+
+    Args:
+        raw_payload: The dictionary of parameters for the API method.
+
+    Returns:
+        A cleaned and formatted payload dictionary.
+    """
+    if raw_payload:
+        # Remove None values from payload
+        payload = {k: v for k, v in raw_payload.items() if v is not None}
+
+        if 'self' in payload:
+            payload.pop('self')
+        if 'cls' in payload:
+            payload.pop('cls')
+        if 'kwargs' in payload:
+            payload.pop('kwargs')
+        if 'args' in payload:
+            payload.pop('args')
+        # Apply text formatting if 'text' or 'caption' keys exist
+        if 'text' in payload and payload['text'] is not None:
+            payload['text'] = format_text(payload['text'])
+        if 'caption' in payload and payload['caption'] is not None:
+            payload['caption'] = format_text(payload['caption'])
+            
+        return payload
+    return {}
 
 class InlineQueryResultArticle(BaseType):
     """
     Represents a link to an article or web page.
     """
 
-    def __init__(
-        self,
+    def __new__(
+        cls,
         id: str,
         title: str,
         input_message_content: Dict,
@@ -19,8 +52,9 @@ class InlineQueryResultArticle(BaseType):
         thumbnail_url: Optional[str] = None,
         thumbnail_width: Optional[int] = None,
         thumbnail_height: Optional[int] = None,
+        *args: Any,
         **kwargs: Any
-    ):
+    ) -> dict:
         """
         Initialize an InlineQueryResultArticle object that represents a link to an article or web page.
 
@@ -39,47 +73,50 @@ class InlineQueryResultArticle(BaseType):
         Raises:
             ValueError: If id length is invalid
         """
-        super().__init__(**kwargs)
         
-        # Validate id length (1-64 bytes)
-        if not (1 <= len(id.encode('utf-8')) <= 64):
-            raise ValueError("id must be between 1 and 64 bytes")
+        # # Validate id length (1-64 bytes)
+        # if not (1 <= len(id.encode('utf-8')) <= 64):
+        #     raise ValueError("id must be between 1 and 64 bytes")
 
         # Required fields
-        self.type = 'article'  # Type of the result, must be article
-        self.id = id
-        self.title = title
+        # cls.type = "article"  # Type of the result, must be article
+        # cls.id = id
+        # cls.title = title
         
-        # Handle input message content
-        if isinstance(input_message_content, dict):
-            self.input_message_content = InputTextMessageContent(**input_message_content)
-        elif isinstance(input_message_content, InputTextMessageContent):
-            self.input_message_content = input_message_content
-        else:
-            raise ValueError("input_message_content must be either a dict or InputTextMessageContent instance")
+        # # # Handle input message content
+        # if isinstance(input_message_content, dict):
+        #     cls.input_message_content = InputTextMessageContent(**input_message_content)
+        # elif isinstance(input_message_content, InputTextMessageContent):
+        #     cls.input_message_content = input_message_content
+        # else:
+        #     raise ValueError("input_message_content must be either a dict or InputTextMessageContent instance")
 
-        # Optional fields
-        self.reply_markup = reply_markup if isinstance(reply_markup, InlineKeyboardMarkup) else \
-                          InlineKeyboardMarkup(**reply_markup) if reply_markup else None
-        self.url = url
-        self.description = description
-        self.thumbnail_url = thumbnail_url
-        self.thumbnail_width = thumbnail_width
-        self.thumbnail_height = thumbnail_height
+        # # Optional fields
+        # cls.reply_markup = reply_markup if isinstance(reply_markup, InlineKeyboardMarkup) else \
+        #                   InlineKeyboardMarkup(**reply_markup) if reply_markup else None
+        # cls.url = url
+        # cls.description = description
+        # cls.thumbnail_url = thumbnail_url
+        # cls.thumbnail_width = thumbnail_width
+        # cls.thumbnail_height = thumbnail_height
 
-        # Store any additional fields for future compatibility
-        for key, value in kwargs.items():
-            if not hasattr(self, key):
-                setattr(self, key, value)
+        # # Store any additional fields for future compatibility
+        # for key, value in kwargs.items():
+        #     if not hasattr(cls, key):
+        #         setattr(cls, key, value)
 
-    def __str__(self) -> str:
-        """
-        Get a string representation of the inline query result article.
+        payload = _prepare_payload(raw_payload=locals().copy())
+        payload['type']= 'article'
+        return payload
+    
+    # def __str__(cls) -> str:
+    #     """
+    #     Get a string representation of the inline query result article.
 
-        Returns:
-            str: A string containing the title and description (if available)
-        """
-        result = f"Article: {self.title}"
-        if self.description:
-            result += f" - {self.description[:50]}..."
-        return result
+    #     Returns:
+    #         str: A string containing the title and description (if available)
+    #     """
+    #     result = f"Article: {cls.title}"
+    #     if cls.description:
+    #         result += f" - {cls.description[:50]}..."
+    #     return result

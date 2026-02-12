@@ -4,16 +4,37 @@ from .WebAppInfo import WebAppInfo
 from .LoginUrl import LoginUrl
 from .SwitchInlineQueryChosenChat import SwitchInlineQueryChosenChat
 from .CallbackGame import CallbackGame
+from monogram.text import format_text
 
-def validate_payload(_locals):
-    _locals = _locals  # Create a copy of locals()
-    # Remove the key cls ir self from _locals
-    if 'self' in _locals:
-        _locals.pop('self')
-    if 'cls' in _locals:
-        _locals.pop('cls')
-    payload = {k: v for k, v in _locals.items() if v}  # Remove None values from payload
-    return payload
+def _prepare_payload(raw_payload):
+    """
+    Prepares a payload dictionary for Telegram API requests.
+    Removes None values and formats text/caption fields.
+
+    Args:
+        raw_payload: The dictionary of parameters for the API method.
+
+    Returns:
+        A cleaned and formatted payload dictionary.
+    """
+    if raw_payload:
+        # Remove None values from payload
+        payload = {k: v for k, v in raw_payload.items() if v is not None}
+
+        if 'self' in payload:
+            payload.pop('self')
+        if 'cls' in payload:
+            payload.pop('cls')
+        if 'kwargs' in payload:
+            payload.pop('kwargs')
+        # Apply text formatting if 'text' or 'caption' keys exist
+        if 'text' in payload and payload['text'] is not None:
+            payload['text'] = format_text(payload['text'])
+        if 'caption' in payload and payload['caption'] is not None:
+            payload['caption'] = format_text(payload['caption'])
+            
+        return payload
+    return {}
 
 class InlineKeyboardButton(BaseType):
     """
@@ -49,5 +70,5 @@ class InlineKeyboardButton(BaseType):
             :param pay: Optional. Boolean indicating if the button is for a payment.
             """
         
-        payload = validate_payload(locals().copy())
+        payload = _prepare_payload(locals().copy())
         return payload

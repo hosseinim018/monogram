@@ -14,11 +14,11 @@ def format_text(text):
         # Bold: *bold text*
         text = re.sub(r'\*([^*]+)\*', r'<b>\1</b>', text)
 
-        # Italic: _italic text_
-        text = re.sub(r'_([^_]+)_', r'<i>\1</i>', text)
+        # Italic: _italic text_ (but not in URLs)
+        text = re.sub(r'(?<!:/)(?<![a-zA-Z0-9])_([^_\s]+)_(?![a-zA-Z0-9])', r'<i>\1</i>', text)
 
-        # Underline: __underline__
-        text = re.sub(r'__(.*?)__', r'<u>\1</u>', text)
+        # Underline: __underline__ (but not in URLs)
+        text = re.sub(r'(?<!:/)(?<![a-zA-Z0-9])__(.+?)__(?![a-zA-Z0-9])', r'<u>\1</u>', text)
 
         # Strikethrough: ~strikethrough~
         text = re.sub(r'~(.*?)~', r'<s>\1</s>', text)

@@ -2534,48 +2534,57 @@ class Methods(Network):
             **kwargs
         }
 
-        files = {}
-        if isinstance(audio, bytes):
-            files['audio'] = ('audio.mp3', audio, 'audio/mpeg')
-        elif isinstance(audio, str) and (audio.startswith('http://') or audio.startswith('https://')):
-            payload['audio'] = audio
-        else:
-            payload['audio'] = audio
-
-        if thumbnail:
-            if isinstance(thumbnail, bytes):
-                files['thumbnail'] = ('thumbnail.jpg', thumbnail, 'image/jpeg')
-            elif isinstance(thumbnail, str) and (thumbnail.startswith('http://') or thumbnail.startswith('https://')):
-                payload['thumbnail'] = thumbnail
-            else:
-                payload['thumbnail'] = thumbnail
-
-        # Serialize JSON-compatible values
-        if isinstance(caption_entities, list):
-            payload['caption_entities'] = json.dumps(caption_entities)
-        if isinstance(reply_parameters, dict):
-            payload['reply_parameters'] = json.dumps(reply_parameters)
-        if isinstance(reply_markup, dict):
-            payload['reply_markup'] = json.dumps(reply_markup)
-
         # Remove None values from the payload
         clean_payload = self._prepare_payload(payload)
+        if isinstance(clean_payload.get('reply_markup'), dict):
+            clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
+
+        audio = InputFile(audio)
+        file = open(audio.file_path, 'rb')
+        files = {"audio": file}
+
+        # files = {}
+        # if isinstance(audio, bytes):
+        #     files['audio'] = ('audio.mp3', audio, 'audio/mpeg')
+        # elif isinstance(audio, str) and (audio.startswith('http://') or audio.startswith('https://')):
+        #     payload['audio'] = audio
+        # else:
+        #     payload['audio'] = audio
+
+        # if thumbnail:
+        #     if isinstance(thumbnail, bytes):
+        #         files['thumbnail'] = ('thumbnail.jpg', thumbnail, 'image/jpeg')
+        #     elif isinstance(thumbnail, str) and (thumbnail.startswith('http://') or thumbnail.startswith('https://')):
+        #         payload['thumbnail'] = thumbnail
+        #     else:
+        #         payload['thumbnail'] = thumbnail
+
+        # # Serialize JSON-compatible values
+        # if isinstance(caption_entities, list):
+        #     payload['caption_entities'] = json.dumps(caption_entities)
+        # if isinstance(reply_parameters, dict):
+        #     payload['reply_parameters'] = json.dumps(reply_parameters)
+        # if isinstance(reply_markup, dict):
+        #     payload['reply_markup'] = json.dumps(reply_markup)
 
         try:
-            return self.request(
+            result = self.request(
                 method="sendAudio",
                 payload=clean_payload,
                 return_response=return_response,
                 files=files if files else None
             )
+            return Message(**result)
+        
         except requests.exceptions.RequestException as e:
             logging.error(f"Failed to send audio to chat {chat_id}. Error: {e}")
             raise
         finally:
-            # Close file handles if they were opened as bytes
-            for f_key in ['audio', 'thumbnail']:
-                if f_key in files and hasattr(files[f_key][1], 'close'):
-                    files[f_key][1].close()
+            # Close any opened file handles
+            if 'files' in locals() and files:
+                for f_key in ['audio', 'thumbnail']:
+                    if f_key in files and hasattr(files[f_key], 'close'):
+                        files[f_key].close()
 
 
  
@@ -2861,33 +2870,40 @@ class Methods(Network):
             **kwargs
         }
 
-        files = {}
-        if isinstance(document, bytes):
-            files['document'] = ('document.bin', document, 'application/octet-stream') # Generic binary
-        elif isinstance(document, str) and (document.startswith('http://') or document.startswith('https://')):
-            payload['document'] = document
-        else:
-            payload['document'] = document
+        # files = {}
+        # if isinstance(document, bytes):
+        #     files['document'] = ('document.bin', document, 'application/octet-stream') # Generic binary
+        # elif isinstance(document, str) and (document.startswith('http://') or document.startswith('https://')):
+        #     payload['document'] = document
+        # else:
+        #     payload['document'] = document
 
-        if thumbnail:
-            if isinstance(thumbnail, bytes):
-                files['thumbnail'] = ('thumbnail.jpg', thumbnail, 'image/jpeg')
-            elif isinstance(thumbnail, str) and (thumbnail.startswith('http://') or thumbnail.startswith('https://')):
-                payload['thumbnail'] = thumbnail
-            else:
-                payload['thumbnail'] = thumbnail
+        # if thumbnail:
+        #     if isinstance(thumbnail, bytes):
+        #         files['thumbnail'] = ('thumbnail.jpg', thumbnail, 'image/jpeg')
+        #     elif isinstance(thumbnail, str) and (thumbnail.startswith('http://') or thumbnail.startswith('https://')):
+        #         payload['thumbnail'] = thumbnail
+        #     else:
+        #         payload['thumbnail'] = thumbnail
 
-        # Serialize JSON-compatible values
-        if isinstance(caption_entities, list):
-            payload['caption_entities'] = json.dumps(caption_entities)
-        if isinstance(reply_parameters, dict):
-            payload['reply_parameters'] = json.dumps(reply_parameters)
-        if isinstance(reply_markup, dict):
-            payload['reply_markup'] = json.dumps(reply_markup)
+        # # Serialize JSON-compatible values
+        # if isinstance(caption_entities, list):
+        #     payload['caption_entities'] = json.dumps(caption_entities)
+        # if isinstance(reply_parameters, dict):
+        #     payload['reply_parameters'] = json.dumps(reply_parameters)
+        # if isinstance(reply_markup, dict):
+        #     payload['reply_markup'] = json.dumps(reply_markup)
 
+        # # Remove None values from the payload
+        # clean_payload = self._prepare_payload(payload)
         # Remove None values from the payload
         clean_payload = self._prepare_payload(payload)
+        if isinstance(clean_payload.get('reply_markup'), dict):
+            clean_payload['reply_markup'] = json.dumps(clean_payload['reply_markup'])
 
+        audio = InputFile(audio)
+        file = open(audio.file_path, 'rb')
+        files = {"document": document}
         try:
             return self.request(
                 method="sendDocument",
@@ -3401,8 +3417,9 @@ class Methods(Network):
         **kwargs: Any
     ) -> Optional[requests.Response]:
         """
-        Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document).
-        Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+        Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document).
+        On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, 
+        this limit may be changed in the future.
 
         Args:
             chat_id: Unique identifier for the target chat or username of the target channel.
@@ -3494,15 +3511,19 @@ class Methods(Network):
                 return_response=return_response,
                 files=files if files else None
             )
-            # print(result)
+            
+            # On success, return the sent Message object
+            # Uncomment and implement Message class when available
             return Message(**result)
         except requests.exceptions.RequestException as e:
             logging.error(f"Failed to send video to chat {chat_id}. Error: {e}")
             raise
         finally:
-            for f_key in ['video', 'thumbnail']:
-                if f_key in files and hasattr(files[f_key][1], 'close'):
-                    files[f_key][1].close()
+            # Close any opened file handles
+            if 'files' in locals() and files:
+                for f_key in ['video', 'thumbnail']:
+                    if f_key in files and hasattr(files[f_key], 'close'):
+                        files[f_key].close()
 
     def sendVideoNote(
         self,
@@ -4733,7 +4754,9 @@ class Methods(Network):
         **kwargs: Any
     ) -> Optional[requests.Response]:
         """
-        Edit captions of messages.
+        Use this method to edit captions of messages. On success, if the edited message is not an inline message, 
+        the edited Message is returned, otherwise True is returned. Note that business messages that were not sent 
+        by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
 
         Args:
             chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat.
@@ -4748,6 +4771,7 @@ class Methods(Network):
 
         Returns:
             requests.Response if return_response=True, None otherwise.
+            On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
 
         Raises:
             ValueError: If neither message_id/chat_id nor inline_message_id is provided.
@@ -4775,11 +4799,19 @@ class Methods(Network):
             clean_payload['caption_entities'] = json.dumps(clean_payload['caption_entities'])
 
         try:
-            return self.request(
+            result = self.request(
                 method="editMessageCaption",
                 payload=clean_payload,
                 return_response=return_response
             )
+            # If we get here, result contains the actual API response data
+            if inline_message_id:
+                # For inline messages, the API returns True on success
+                return result  # This should be True
+            else:
+                # For non-inline messages, the API returns the edited Message object
+                # Uncomment and implement Message class when available
+                return Message(**result)
         except requests.exceptions.RequestException as e:
             logging.error(f"Failed to edit message caption. Error: {e}")
             raise
@@ -4992,7 +5024,9 @@ class Methods(Network):
         **kwargs: Any
     ) -> Optional[requests.Response]:
         """
-        Edit text messages.
+        Use this method to edit text and game messages. On success, if the edited message is not an inline message, 
+        the edited Message is returned, otherwise True is returned. Note that business messages that were not sent 
+        by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
 
         Args:
             text: New text of the message, 1-4096 characters after entities parsing.
@@ -5008,6 +5042,7 @@ class Methods(Network):
 
         Returns:
             requests.Response if return_response=True, None otherwise.
+            On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
 
         Raises:
             ValueError: If 'text' is empty, or if neither message_id/chat_id nor inline_message_id is provided.
@@ -5040,11 +5075,20 @@ class Methods(Network):
             clean_payload['link_preview_options'] = json.dumps(clean_payload['link_preview_options'])
 
         try:
-            return self.request(
+            result = self.request(
                 method="editMessageText",
                 payload=clean_payload,
                 return_response=return_response
             )
+            # If we get here, result contains the actual API response data
+            if inline_message_id:
+                # For inline messages, the API returns True on success
+                return result  # This should be True
+            else:
+                # For non-inline messages, the API returns the edited Message object
+                # Uncomment and implement Message class when available
+                return Message(**result)
+        
         except requests.exceptions.RequestException as e:
             logging.error(f"Failed to edit message text. Error: {e}")
             raise
@@ -5209,13 +5253,13 @@ class Methods(Network):
 
         # Remove None values
         clean_payload = self._prepare_payload(payload)
-
+        
         # Serialize JSON-compatible fields
-        # if isinstance(clean_payload.get('results'), list):
-        #     clean_payload['results'] = json.dumps(clean_payload['results'])
-        # if isinstance(clean_payload.get('button'), dict):
-        #     clean_payload['button'] = json.dumps(clean_payload['button'])
-
+        if isinstance(clean_payload.get('results'), list):
+            clean_payload['results'] = json.dumps(clean_payload['results'])
+        if isinstance(clean_payload.get('button'), dict):
+            clean_payload['button'] = json.dumps(clean_payload['button'])
+        
         try:
             return self.request(
                 method="answerInlineQuery",

@@ -1,3 +1,6 @@
+from monogram.text import format_text
+from typing import Dict, Any
+
 class BaseType:
     def __init__(self, *args, **kwargs):
         # Handle keyword arguments
@@ -50,3 +53,31 @@ class BaseType:
             return f'{self.__class__.__name__}({self.__dict__})'
         except Exception as e:
             raise e
+    
+    def _prepare_payload(self, raw_payload: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Prepares a payload dictionary for Telegram API requests.
+        Removes None values and formats text/caption fields.
+
+        Args:
+            raw_payload: The dictionary of parameters for the API method.
+
+        Returns:
+            A cleaned and formatted payload dictionary.
+        """
+        if raw_payload:
+            # Remove None values from payload
+            payload = {k: v for k, v in raw_payload.items() if v is not None}
+
+            if 'self' in payload:
+                payload.pop('self')
+            if 'cls' in payload:
+                payload.pop('cls')
+            # Apply text formatting if 'text' or 'caption' keys exist
+            if 'text' in payload and payload['text'] is not None:
+                payload['text'] = format_text(payload['text'])
+            if 'caption' in payload and payload['caption'] is not None:
+                payload['caption'] = format_text(payload['caption'])
+                
+            return payload
+        return {}
