@@ -241,6 +241,22 @@ With this, the agent can generate handler code that receives `(bot, update)`, us
 
 ---
 
+## 🎓 Learning by Example
+
+Want to see Monogram in action? We've built a complete example project to show you how easily everything fits together.
+
+[🚀 View the Example Bot Repository](https://github.com/hosseinim018/YoutubeDLBot)
+
+This repository includes:
+
+- **Step-by-Step Tutorial** (`TUTORIAL.md`): A full guide from `pip install` to a live webhook-powered bot, including Django setup and Ngrok configuration.
+- **Best Practices**: How to organize your `Bots/bot.py` (or equivalent) and write handlers that use `bot` (a `BotManager` instance) and typed `Update` objects from `monoTypes`.
+- **Local Development**: A practical guide to using Ngrok together with Monogram's CLI (`python manage.py monogram ...`) to expose your local Django server to Telegram.
+
+If you prefer **learning by doing**, check out our **Official Example Bot**. It demonstrates best practices for using Monogram in a real Django project and can be used as a boilerplate for your own bots.
+
+> **Pro Tip:** If this repository doesn't contain an `examples/` folder yet, use the external example repository as your reference project structure.
+
 ## 📚 Wiki & Deep Dives
 
 For architecture, type system, webhook flow, and contributing guidelines, see the **GitHub Wiki**:
