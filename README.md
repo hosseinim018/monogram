@@ -1,99 +1,178 @@
 # Monogram
 
-Monogram is a powerful and flexible Django library designed to help developers build scalable Telegram bots with ease. Whether you're a beginner or an experienced developer, Monogram provides the tools you need to create robust and feature-rich bots.
+<div align="center">
 
-## Features
+**A Typography-based Telegram Framework for Django**
 
-- **Bot Manager**: Manage your bots effortlessly with Monogram's intuitive bot management system.
-- **Security and Middleware**: Built-in security features and middleware for seamless integration.
-- **Webhook-Based**: Efficient and reliable webhook support for real-time updates.
-- **Ease of Use**: Simple and developer-friendly API for quick implementation.
-- **Scalable and Extendable**: Designed to scale and adapt to your needs, making it suitable for everyone.
+*Build scalable Telegram bots with a Django-native, type-safe API that mirrors the official Telegram Bot API.*
 
-> **Warning**: Monogram is currently in beta. If you encounter any issues or have new ideas, please report them!
+</div>
 
 ---
 
-## Installation
+## ✨ What is Monogram?
 
-To install Monogram, simply use pip:
+Monogram is a **Django-based Telegram Bot library** that uses **webhooks** to receive updates. It follows a *Typography* approach: method names, parameters, and types align with the [official Telegram Bot API](https://core.telegram.org/bots/api), so you work with familiar concepts and a clean, predictable surface. Every bot is a **Django model**—stored in the DB, manageable via admin or custom views, and ready to scale within the Django ecosystem.
+
+---
+
+## 🎯 The "Miracle": BotManager
+
+**BotManager** bridges the gap between **Django Models** and **Telegram Methods**. Each bot is a single model instance that *is also* the API client—no separate client object to hold or pass around.
+
+```python
+from monogram.models import BotManager
+
+# Load your bot from the database
+bot = BotManager.objects.get(name='SupportBot')
+
+# Call Telegram methods directly on the model instance
+bot.sendMessage(chat_id=user_id, text='Hello!')
+me = bot.getMe()
+```
+
+You get **`bot_instance.sendMessage()`** (and every other API method) because `BotManager` inherits from **Methods**, which implements the full Telegram API. The same object is your persisted bot configuration and your live client. Credentials stay in sync: when you change the token and save, the instance is reinitialized with the new settings.
+
+---
+
+## 🔗 The Typography Chain
+
+Under the hood, Monogram is built on a simple inheritance chain that gives every bot its power:
+
+| Layer | Role |
+|-------|------|
+| **Network** (`network.py`) | HTTP client: requests, sessions, payload handling, file download. |
+| **Methods** (`methods.py`) | Telegram API methods (e.g. `sendMessage`, `getMe`, `setWebhook`) and typed returns. |
+| **BotManager** (`models.py`) | Django model + Methods → one bot = one model instance. |
+
+**Network → Methods → BotManager.** Each layer adds responsibility; by the time you use a `BotManager` instance, you have the full API at your fingertips.
+
+---
+
+## 🚀 Quickstart
+
+### 1. Install
 
 ```bash
 pip install monogram
 ```
----
 
-## Quickstart
+### 2. Configure Django
 
-Here’s how you can get started with Monogram:
+Add `monogram` to `INSTALLED_APPS` and set your public domain for webhooks:
 
-1. **Create a Django App**:
-   ```bash
-   django-admin startapp mybot
-   ```
+```python
+# settings.py
+INSTALLED_APPS = [
+    # ...
+    'monogram',
+]
 
-2. **Install Monogram**:
-   1. Add `monogram` to your `INSTALLED_APPS` in `settings.py`.
-   2. add `DOMAIN_NAME` to `settings.py`:
-   ```python
-        DOMAIN_NAME = "046ef5be639f.ngrok-free.app" #for monogram webhook
-    ```
+DOMAIN_NAME = "your-domain.com"  # Used for webhook URLs (e.g. https://your-domain.com/monogram/...)
+```
 
-3. add `monogram.urls` to your project's `urls.py`:
+Include Monogram URLs:
 
-   ```python
-   from django.contrib import admin
-   from django.urls import path, include
+```python
+# urls.py
+from django.urls import path, include
 
-   urlpatterns = [
-       path('admin/', admin.site.urls),
-       path('monogram/', include('monogram.urls')),
-   ]
-   ```
-4. in your browser go to your-domain/monogram/ path and add your bot token and setwebook
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('monogram/', include('monogram.urls')),
+]
+```
 
-5. **Create Your Bot**:
-   Define your bot by extending the `Dispatcher` class:
-   ```python
-   from monogram import Dispatcher
+### 3. Migrate and add your bot
 
-   class MyBot(Dispatcher):
-       def handle_update(self, update):
-           self.bot.sendMessage(
-               chat_id=update.message.chat.id,
-               text="Hello, this is my bot!"
-           )
-   ```
+```bash
+python manage.py migrate
+```
 
-6. **Run Your Bot**:
-   Before starting your bot, make sure to apply migrations:
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-   Then, use Django's `runserver` to start your bot:
-   ```bash
-   python manage.py runserver
-   ```
+Open `https://your-domain.com/monogram/` in the browser, add your bot (name + token), then set the webhook for that bot. In the bot’s settings, set **Object** to the dotted path of your bot class (e.g. `myapp.bot.MyBot`).
 
----
+### 4. Define your bot logic class
 
-## Next Steps
+Your class receives the **bot** (`BotManager` instance) and a typed **Update** from `monoTypes`. Use them to send messages, read `update.message`, handle callbacks, etc.
 
-- **Examples**: Check out the [examples](examples/) directory for more use cases.
-- **Documentation**: Read the full documentation [here](documants/).
-- **Advanced Features**: Learn about advanced features like middlewares, custom handlers, and more.
+```python
+# myapp/bot.py
+from monogram.models import BotManager
+from monogram.monoTypes import Update
 
----
+class MyBot:
+    """Bot logic: receives (bot, update); use typed Update and bot.sendMessage()."""
 
-## Contributing
+    def __init__(self, bot: BotManager, update: Update):
+        self.bot = bot
+        self.update = update
+        self.handle_update()
 
-We welcome contributions from the community! Here’s how you can help:
+    def handle_update(self):
+        # Typed update: .message, .callback_query, .inline_query, etc.
+        if 'message' in self.update:
+            msg = self.update.message
+            chat_id = msg.chat.id
+            text = getattr(msg, 'text', '') or ''
+            self.bot.sendMessage(chat_id=chat_id, text=f"You said: {text}")
+```
 
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Submit a pull request with a detailed description of your changes.
+Set **Object** for this bot in the Monogram UI to `myapp.bot.MyBot`. When a webhook arrives, Monogram loads that class, instantiates `MyBot(bot, update)`, and your handler runs with a typed `Update` and direct access to `bot.sendMessage()` and the rest of the API.
+
+### 5. Run the server
+
+```bash
+python manage.py runserver
+```
+
+Use a public URL (or a tunnel like ngrok) for webhooks so Telegram can reach your app.
 
 ---
 
-Thank you for using Monogram! 🚀
+## 🌟 Feature Highlights
+
+| Feature | Description |
+|--------|-------------|
+| **📐 Strict type mapping** | Incoming/outgoing data is mapped to `monoTypes` (`Update`, `Message`, `User`, `Chat`, …) so you work with objects, not raw dicts. |
+| **📈 Scalable bot management** | Multiple bots as Django model rows; manage tokens, webhooks, and handler paths per bot. |
+| **🔌 Seamless Django integration** | Webhooks are Django views; bots are models; use Django auth, DB, and deployment as usual. |
+| **📖 Typography design** | Method and type names follow the [Telegram Bot API](https://core.telegram.org/bots/api); easy to extend and keep in sync with the docs. |
+| **🔒 Webhook security** | Optional secret token verification via `X-Telegram-Bot-Api-Secret-Token` header. |
+| **🌐 Webhook-based** | No long polling; Telegram pushes updates to your HTTPS endpoint. |
+
+---
+
+## 📚 Wiki & Deep Dives
+
+For architecture, type system, webhook flow, and contributing guidelines, see the **GitHub Wiki**:
+
+- [**Home**](https://github.com/YOUR_USERNAME/monogram/wiki/Home) — Overview and Typography philosophy  
+- [**Architecture**](https://github.com/YOUR_USERNAME/monogram/wiki/Architecture) — Network → Methods → BotManager and Mermaid diagram  
+- [**Type system**](https://github.com/YOUR_USERNAME/monogram/wiki/Type-System) — `monoTypes` and `BaseType`  
+- [**Webhook handling**](https://github.com/YOUR_USERNAME/monogram/wiki/Webhook-Handling) — How updates are routed and converted to typed `Update`  
+- [**Contributing**](https://github.com/YOUR_USERNAME/monogram/wiki/Contributing) — How to add types and methods and keep the structure consistent  
+
+Replace `YOUR_USERNAME` with your GitHub username or org.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome. To keep the project consistent:
+
+- **Typography**: Follow the [Telegram Bot API](https://core.telegram.org/bots/api) for method and type names.
+- **Types**: New Telegram types should inherit from `BaseType` in `monoTypes/` and be exported in `monoTypes/__init__.py`.
+- **Methods**: New API methods go in `methods.py` so they are available on every `BotManager` instance.
+- **Django**: Preserve the webhook flow and the `BotManager` model contract.
+
+See the [Contributing wiki page](https://github.com/YOUR_USERNAME/monogram/wiki/Contributing) for the full guide (adding types, adding methods, PR checklist).
+
+1. Fork the repo  
+2. Create a branch for your feature or fix  
+3. Submit a pull request with a clear description of your changes  
+
+---
+
+> **Note:** Monogram is currently in **beta**. If you hit issues or have ideas, please open an issue or PR.
+
+Thank you for using Monogram.
