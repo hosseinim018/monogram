@@ -83,24 +83,103 @@ urlpatterns = [
 ]
 ```
 
-### 3. Migrate and add your bot
+### 3. Migrate
 
 ```bash
 python manage.py migrate
 ```
 
-Open `https://github.com/hosseinim018/monogram/` in the browser, add your bot (name + token), then set the webhook for that bot. In the bot’s settings, set **Object** to the dotted path of your bot class (e.g. `myapp.bot.MyBot`).
+You can also add bots and set webhooks via the browser at `/monogram/`. The terminal flow below is recommended for adding a bot and setting its webhook.
+’
+### 4. Bot setup (terminal)
 
-### 4. Define your bot logic class
+Monogram includes a management command that **bridges the Django database with Telegram's Webhook API**: you add a bot (stored as a `BotManager` row) and set its webhook from the terminal—no browser required.
 
-Your class receives the **bot** (`BotManager` instance) and a typed **Update** from `monoTypes`. Use them to send messages, read `update.message`, handle callbacks, etc.
+#### 4.1 Add a bot
+
+Run the interactive add command:
+
+```bash
+python manage.py monogram add
+```
+
+You will see a short intro; press **`y`** to continue, then answer the prompts:
+
+| Prompt | What to enter |
+|--------|----------------|
+| **Bot name** | A unique name for this bot (e.g. `MyBot`). Used in the system and in webhook URLs. |
+| **Bot username** | The bot's Telegram username (e.g. `@mybot`). |
+| **Owner's Telegram user ID** | Your Telegram user ID (numeric). |
+| **Bot token** | The token from [@BotFather](https://t.me/BotFather). |
+| **Secret token** | **Press Enter** to auto-generate a secret for webhook verification, or type your own. |
+| **Bot class path** | **Crucial.** Dotted path to your handler class. Example: `Bots.bot.Mybot` (must match your app/module structure). |
+| **Use a proxy? (y/n)** | Type **`n`** for no proxy (or `y` and then enter the proxy URL if needed). |
+
+After all fields are collected, you get a summary and three choices:
+
+```
+Do you want to:
+[s] Save the bot
+[e] Edit information
+[c] Cancel
+Your choice:
+```
+
+Press **`s`** to save the bot to the database.
+
+> **Note:** The bot is stored as a `BotManager` model instance. The **Bot class path** is saved in the `object` field and used at webhook time to load and instantiate your handler class with `(bot, update)`.
+
+#### 4.2 Set the webhook
+
+To register the webhook URL with Telegram for the bot you just added:
+
+1. **List your bots:**
+
+   ```bash
+   python manage.py monogram list
+   ```
+
+2. You'll see a numbered list of bots, for example:
+
+   ```
+   Available bots:
+   [1] MyBot
+   [2] SupportBot
+
+   Enter bot number to see options (or "c" to cancel):
+   ```
+
+3. Enter the **bot index** (e.g. **`1`** for the first bot).
+
+4. You'll see options:
+
+   ```
+   Available options:
+   [1] show information
+   [2] set webhook
+   [3] delete webhook
+   [4] webhook info
+   [5] edit bot
+   [6] delete bot
+   enter "c" to cancel
+
+   Enter option number:
+   ```
+
+5. Enter **`2`** to **set webhook**. The command builds the URL from `DOMAIN_NAME` and registers it with Telegram (including the secret token). On success, the bot's `webhook_active` flag is updated in the database.
+
+You can use the same flow later: `python manage.py monogram list` → select bot index → option **2** to set webhook (e.g. after changing domain or redeploying).
+
+### 5. Define your bot logic class
+
+Your handler class must live at the **Bot class path** you entered in step 4.1 (e.g. `Bots.bot.Mybot` means a class `Mybot` in `Bots/bot.py`). It receives the **bot** (`BotManager` instance) and a typed **Update** from `monoTypes`.
 
 ```python
-# myapp/bot.py
+# Bots/bot.py (for path Bots.bot.Mybot)
 from monogram.models import BotManager
 from monogram.monoTypes import Update
 
-class MyBot:
+class Mybot:
     """Bot logic: receives (bot, update); use typed Update and bot.sendMessage()."""
 
     def __init__(self, bot: BotManager, update: Update):
@@ -117,9 +196,9 @@ class MyBot:
             self.bot.sendMessage(chat_id=chat_id, text=f"You said: {text}")
 ```
 
-Set **Object** for this bot in the Monogram UI to `myapp.bot.MyBot`. When a webhook arrives, Monogram loads that class, instantiates `MyBot(bot, update)`, and your handler runs with a typed `Update` and direct access to `bot.sendMessage()` and the rest of the API.
+When a webhook arrives, Monogram loads this class by the path stored in `bot.object`, instantiates `Mybot(bot, update)`, and your handler runs with a typed `Update` and direct access to `bot.sendMessage()` and the rest of the API.
 
-### 5. Run the server
+### 6. Run the server
 
 ```bash
 python manage.py runserver
